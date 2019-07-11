@@ -678,8 +678,8 @@ define(['app', 'avelayout', 'layoutCache',
                     screen1LayoutApp.dataContexts[4].setName('实景图片展示');
 
 
-                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TableViews/HuJiaoTiShiMianban.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[5].setName('呼叫通知提示面板');
+                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TableViews/CheLiangJianCe.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[5].setName('车辆检测统计');
 
                     screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/TableViews/ShangXianXianMianban.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[6].setName('上下线通知提示面板 ');
@@ -2047,13 +2047,9 @@ define(['app', 'avelayout', 'layoutCache',
         appModule.controller("MapManager3DControl", function($scope){
 
             $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                { text: "主要人员图层",expanded: true,checked:true,items: [
-                    { text: "主要人员标注图层",checked:true },
-                    { text: "主要人员历史轨迹图层",checked:true },
-
-                ] },
-                { text: "场馆区域标注图层",checked:true},
-                { text: "非主要人员图层",checked:true},
+                { text: "监测站图层",expanded: true,checked:true},
+                { text: "路况图层",checked:true},
+                { text: "检测区域",checked:true},
 
             ]});
             function checkedNodeIds(nodes, checkedNodes) {

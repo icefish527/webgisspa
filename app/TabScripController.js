@@ -524,4 +524,62 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
             }, 1000);
         });
     }]);
+
+
+    //车辆检测控制器
+    appModule.controller("CheLiangJianCeController", ['$scope', function ($scope) {
+        //todo:这里调接口
+        var bendizongliang = 10000;
+        require(['echarts', 'echarts/theme/macarons', 'echarts/chart/line'], function (ec, theme) {
+            var myChart = ec.init(document.getElementById('cheliangjianceChart'));
+
+            var option = {
+                tooltip : {
+                    trigger: 'axis'
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日'],
+                        axisLabel:{
+                            textStyle:{
+                                color: "white"
+                            }
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel:{
+                            textStyle:{
+                                color: "white"
+                            }
+                        }
+                    }
+                ],
+                series : [
+                    {
+                        name:'成交',
+                        type:'line',
+                        smooth:true,
+                        itemStyle: {
+                            normal: {
+                                areaStyle: {
+                                    type: 'default'}}},
+                        data:[10, 12, 21, 54, 260, 830, 710]
+                    }
+                ]
+            };
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            myChart.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart.resize();
+            }, 1000);
+        });
+    }]);
 });
