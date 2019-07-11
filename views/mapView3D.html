@@ -192,19 +192,19 @@
         });
 
         var AllLayersDic = new Array()
-        AllLayersDic['非主要人员图层'] = {};
-        AllLayersDic['场馆区域标注图层'] = {};
-        AllLayersDic['主要人员历史轨迹图层'] = {};
-        AllLayersDic['主要人员标注图层'] = {};
-
+        // AllLayersDic['非主要人员图层'] = {};
+        // AllLayersDic['场馆区域标注图层'] = {};
+        //  AllLayersDic['主要人员历史轨迹图层'] = {};
+        //  AllLayersDic['主要人员标注图层'] = {};
+        AllLayersDic['监测站图层'] = {};
+        AllLayersDic['路况图层'] = {};
+        AllLayersDic['检测区域'] = {};
         // 默认东半球的rectangle，用于viewHome时自动定位到东半球
         var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(115.1, 20.0, 125.10001, 35.00001);
         var viewHome = function () {
 
 
             Cesium3DViewer.trackedEntity = undefined;
-
-
             var scene = Cesium3DViewer.scene;
             var duration = 1.5;
             var mode = scene.mode;
@@ -248,18 +248,19 @@
                 });
             }
         };
-        var FeiZhuyaoRenYuanLayer;
-        var ZhuyaoRenYuanLayer;
-        var LiShiGuiJiLayer;
+        // var FeiZhuyaoRenYuanLayer;
+        //   var ZhuyaoRenYuanLayer;
+        //  var LiShiGuiJiLayer;
+        //  var JianCeZhanPointLayer;
         var Cesium3DViewer;
         var InitMap3D = function () {
 
 
-            var imagerylayer = new Cesium.OpenStreetMapImageryProvider({
-                url: Config.Map3D.TiledMapURl,
-            });
+            //var imagerylayer = new Cesium.OpenStreetMapImageryProvider({
+            //     url: Config.Map3D.TiledMapURl,
+            //   });
             var arcgislayer=new Cesium.ArcGisMapServerImageryProvider({url:"http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",});
-            arcgislayer.
+
             Cesium3DViewer = new Cesium.Viewer('map', {
                 // 关闭所有的插件
                 animation: false,
@@ -276,16 +277,18 @@
                 imageryProvider: arcgislayer
             });
 
+            queryJianCeZhanAddToMap();
+            queryRoadLineAddToMap();
+            queryPolygonAddToMap();
+            //FeiZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl + "/0"});
+            // ZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.ZhuyaoRenyuanRealTimeMapURl + "/0"});
+            //  LiShiGuiJiLayer = L.esri.featureLayer({url: Config.Map2D.OldTimeMapRUL + "/0"});
 
-            FeiZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl + "/0"});
-            ZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.ZhuyaoRenyuanRealTimeMapURl + "/0"});
-            LiShiGuiJiLayer = L.esri.featureLayer({url: Config.Map2D.OldTimeMapRUL + "/0"});
 
-
-            queryZhuYaoRenYuanAddToMap();
-            queryFeiZhuYaoRenYuanAddToMap();
-            ZhuYaoChangGuanQuYuAddToMap();
-            queryZhuYaoRenYuanLiShiGuiJiAddToMap();
+            // queryZhuYaoRenYuanAddToMap();
+            //  queryFeiZhuYaoRenYuanAddToMap();
+            //  ZhuYaoChangGuanQuYuAddToMap();
+            // queryZhuYaoRenYuanLiShiGuiJiAddToMap();
             Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
                 var entity = pickEntity(Cesium3DViewer, e);
                 if (entity) {
@@ -310,6 +313,100 @@
 
             viewHome();
         };
+
+        //加载散点图
+        var queryJianCeZhanAddToMap=function () {
+            $.getJSON("data/PointData.json", function (data)
+            {
+                $.each(data,function (infoIndex,info) {
+                    var userID = info["Name"];
+                    var imageurl = 'images/venueNormalIcon.png';
+                    //  if (testIndex % 3 == 0) {
+                    //     imageurl = 'images/ZYRY_OnLine.png';
+                    //  } else if (testIndex % 3 == 1) {
+                    //  } else if (testIndex % 3 == 2) {
+                    //     imageurl = 'images/ZYRY_OffLine.png';
+                    //     }     ;
+                    //  var type=info["Type"];
+
+                    var origin = Cesium.Cartesian3.fromDegrees(info["Lon"],info["Lat"] , info["Alt"]);
+                    var jiancezhan = Cesium3DViewer.entities.add({
+                        id: userID,
+                        name: userID,
+                        show: true,
+                        position: origin,
+                        billboard: {
+                            image: imageurl,
+                            scale: 1,
+                            show: true,
+                            material: Cesium.Color.BLUE
+                        },
+                        label: {
+                            text: "监测站",
+                            font: '14pt monospace',
+                            scale: 2,
+                            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                            outlineWidth: 1,
+                            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                            pixelOffset: new Cesium.Cartesian2(0, -9)
+                        }
+                    });
+                    AllLayersDic['监测站图层'][userID] = jiancezhan;
+                })
+            });
+
+        }
+
+        //加载道路 并赋值颜色
+        var queryRoadLineAddToMap=function () {
+
+            $.getJSON("data/PointData.json", function (data)
+            {
+                var lineArray = new Array();
+                $.each(data,function (infoIndex,info) {
+                    lineArray.push(info["Lon"] );
+                    lineArray.push(info["Lat"]);
+                    // lineArray.push(info["Alt"]);
+                });
+
+                var roadline = Cesium3DViewer.entities.add({
+                    polyline: {
+                        positions: Cesium.Cartesian3.fromDegreesArray(lineArray),
+                        width: 2,
+                        material: Cesium.Color.GREEN
+                    }
+                });
+                AllLayersDic['路况图层'][1001] = roadline;
+
+            });
+        }
+
+
+        var queryPolygonAddToMap=function () {
+
+            $.getJSON("data/PointData.json", function (data){
+                var lineArray = new Array();
+                $.each(data,function (infoIndex,info) {
+                    lineArray.push(info["Lon"] );
+                    lineArray.push(info["Lat"]);
+                    // lineArray.push(info["Alt"]);
+                });
+
+                var area = Cesium3DViewer.entities.add({
+                    polygon: {
+                        hierarchy:Cesium.Cartesian3.fromDegreesArray(lineArray) ,
+                        width: 2,
+                        perPositionHeight: true,
+                        material: Cesium.Color.YELLOW.withAlpha(0.4)
+                    }
+                });
+                AllLayersDic['检测区域'][1001] = area;
+            });
+
+        }
+
+
+
         //查询主要人员，并绘制到地图
         var testIndex = 1;
         var queryZhuYaoRenYuanAddToMap = function () {
@@ -318,44 +415,45 @@
                 AllLayersDic['主要人员标注图层'].removeAt(i);
             }
             ZhuyaoRenYuanLayer.query().where(" 1=1 ")
-                    .run(function (error, featureCollection) {
-                        for (var i = 0; i < featureCollection.features.length; i++) {
-                            var userID = featureCollection.features[i].properties.UserID;
-                            var imageurl = 'images/ZYRY_OnLine.png';
-                            if (testIndex % 3 == 0) {
-                                imageurl = 'images/ZYRY_OnLine.png';
-                            } else if (testIndex % 3 == 1) {
-                                imageurl = 'images/ZYRY_HuJiao.png';
-                            } else if (testIndex % 3 == 2) {
-                                imageurl = 'images/ZYRY_OffLine.png';
-                            }
-                            ;
-                            testIndex++;
-                            var origin = Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y, 20);
-                            var zhuyaorenyuan = Cesium3DViewer.entities.add({
-                                id: userID,
-                                name: userID,
-                                show: true,
-                                position: origin,
-                                billboard: {
-                                    image: imageurl,
-                                    scale: 0.5,
-                                    show: true
-                                },
-                                label: {
-                                    text: "主要人员",
-                                    font: '14pt monospace',
-                                    scale: 0.5,
-                                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                                    outlineWidth: 2,
-                                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                                    pixelOffset: new Cesium.Cartesian2(0, -9)
-                                }
-                            });
-                            AllLayersDic['非主要人员图层'][userID] = zhuyaorenyuan;
+                .run(function (error, featureCollection) {
+                    for (var i = 0; i < featureCollection.features.length; i++) {
+                        var userID = featureCollection.features[i].properties.UserID;
+                        var imageurl = 'images/ZYRY_OnLine.png';
+                        if (testIndex % 3 == 0) {
+                            imageurl = 'images/ZYRY_OnLine.png';
+                        } else if (testIndex % 3 == 1) {
+                            imageurl = 'images/ZYRY_HuJiao.png';
+                        } else if (testIndex % 3 == 2) {
+                            imageurl = 'images/ZYRY_OffLine.png';
                         }
-                    });
+                        ;
+                        testIndex++;
+                        var origin = Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y, 20);
+                        var zhuyaorenyuan = Cesium3DViewer.entities.add({
+                            id: userID,
+                            name: userID,
+                            show: true,
+                            position: origin,
+                            billboard: {
+                                image: imageurl,
+                                scale: 0.5,
+                                show: true
+                            },
+                            label: {
+                                text: "主要人员",
+                                font: '14pt monospace',
+                                scale: 0.5,
+                                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                                outlineWidth: 2,
+                                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                                pixelOffset: new Cesium.Cartesian2(0, -9)
+                            }
+                        });
+                        AllLayersDic['非主要人员图层'][userID] = zhuyaorenyuan;
+                    }
+                });
         };
+
 
         //主要人员历史轨迹
         var queryZhuYaoRenYuanLiShiGuiJiAddToMap = function () {
@@ -366,39 +464,39 @@
 
             var userID = '1002';
             LiShiGuiJiLayer.query()
-                    .where("UpdateTime> CONVERT(datetime,'2015-11-01',121) and UpdateTime< CONVERT(datetime,'2015-12-18 14:15:00',121) and userid=" + userID)
-                    .orderBy('UpdateTime', 'ASC')
-                    .run(function (error, featureCollection) {
+                .where("UpdateTime> CONVERT(datetime,'2015-11-01',121) and UpdateTime< CONVERT(datetime,'2015-12-18 14:15:00',121) and userid=" + userID)
+                .orderBy('UpdateTime', 'ASC')
+                .run(function (error, featureCollection) {
 
-                                var pointArr = new Array();
-                                var ss = featureCollection;
-                                for (var i = 0; i < featureCollection.features.length; i++) {
-                                    /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
-                                    pointArr.push(featureCollection.features[i].properties.X);
-                                    pointArr.push(featureCollection.features[i].properties.Y);
-                                }
+                        var pointArr = new Array();
+                        var ss = featureCollection;
+                        for (var i = 0; i < featureCollection.features.length; i++) {
+                            /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
+                            pointArr.push(featureCollection.features[i].properties.X);
+                            pointArr.push(featureCollection.features[i].properties.Y);
+                        }
 
-                                var redLine = Cesium3DViewer.entities.add({
-                                    name: 'Red line on the surface',
-                                    polyline: {
-                                        positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
-                                            118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
-                                        width: 1,
-                                        material: Cesium.Color.RED
-                                    }
-                                });
-
-                                var lishiGuiJi = Cesium3DViewer.entities.add({
-                                    polyline: {
-                                        positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
-                                        width: 2,
-                                        material: Cesium.Color.RED
-                                    }
-                                });
-                                AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
-
+                        var redLine = Cesium3DViewer.entities.add({
+                            name: 'Red line on the surface',
+                            polyline: {
+                                positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
+                                    118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
+                                width: 1,
+                                material: Cesium.Color.RED
                             }
-                    );
+                        });
+
+                        var lishiGuiJi = Cesium3DViewer.entities.add({
+                            polyline: {
+                                positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
+                                width: 2,
+                                material: Cesium.Color.RED
+                            }
+                        });
+                        AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
+
+                    }
+                );
         };
 
         //查询非主要人员，并绘制到地图
@@ -408,23 +506,23 @@
                 AllLayersDic['非主要人员图层'].removeAt(i);
             }
             FeiZhuyaoRenYuanLayer.query().where(" 1=1 ")
-                    .run(function (error, featureCollection) {
-                        for (var i = 0; i < featureCollection.features.length; i++) {
-                            var userID = featureCollection.features[i].properties.UserID;
+                .run(function (error, featureCollection) {
+                    for (var i = 0; i < featureCollection.features.length; i++) {
+                        var userID = featureCollection.features[i].properties.UserID;
 
-                            var feizhuyaorenyuan = Cesium3DViewer.entities.add({
-                                id: userID,
-                                position: Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y),
-                                point: {
-                                    pixelSize: 3,
-                                    color: Cesium.Color.RED,
-                                    outlineColor: Cesium.Color.RED,
-                                    outlineWidth: 0
-                                }
-                            });
-                            AllLayersDic['非主要人员图层'][userID] = feizhuyaorenyuan;
-                        }
-                    });
+                        var feizhuyaorenyuan = Cesium3DViewer.entities.add({
+                            id: userID,
+                            position: Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y),
+                            point: {
+                                pixelSize: 3,
+                                color: Cesium.Color.RED,
+                                outlineColor: Cesium.Color.RED,
+                                outlineWidth: 0
+                            }
+                        });
+                        AllLayersDic['非主要人员图层'][userID] = feizhuyaorenyuan;
+                    }
+                });
         };
 
         //绘制主要场馆区域
@@ -519,14 +617,19 @@
             for (var i = 0; i < checkedNodes.length; i++) {
                 var item = checkedNodes[i];
                 if (item == '主要人员标注图层') {
-                    queryZhuYaoRenYuanAddToMap();
+                    //  queryZhuYaoRenYuanAddToMap();
                 } else if (item == '主要人员历史轨迹图层') {
-                    queryZhuYaoRenYuanLiShiGuiJiAddToMap();
+                    //queryZhuYaoRenYuanLiShiGuiJiAddToMap();
                 } else if (item == '场馆区域标注图层') {
-                    ZhuYaoChangGuanQuYuAddToMap();
+                    // ZhuYaoChangGuanQuYuAddToMap();
                 } else if (item == '非主要人员图层') {
-                    queryFeiZhuYaoRenYuanAddToMap();
+                    // queryFeiZhuYaoRenYuanAddToMap();
+                }else if(item=='监测站图层')
+                {
+                    queryJianCeZhanAddToMap();
                 }
+
+
             }
 
         });
@@ -554,7 +657,7 @@
             $("#MenuWindow").css('display', 'block').css('left', position.x).css('top', position.y).css('width', 210).css('height', 170);
         }
 
-      var  CloseMenuWindow=function()
+        var  CloseMenuWindow=function()
         {
             if ($('#MenuWindow').css('display') == 'block')
             {
@@ -582,7 +685,7 @@
 
         var EntyClick = function (entity,e) {
 
-          /*  alert(entity.id);*/
+            /*  alert(entity.id);*/
             PubSub.publish('MenuManagerSelectedItem3D', entity);
 
             // 设置更新周期
