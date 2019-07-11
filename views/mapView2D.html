@@ -1,0 +1,460 @@
+<link rel="stylesheet" href="css/mapView2D.css"/>
+<div style="width: 100%; height: 100%; float: left;">
+    <div id='map'></div>
+</div>
+
+<div id="MenuWindow" style="display:none;width:210px; height:170px; z-index: 400; position: absolute;"  ng-controller="MenuManagerControl">
+    <div id="ContentWindow">
+        <div style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
+
+            <button class="menuCloseBTn" id="btnMenuClose">
+                <img src="images/close-button-image.png" style="width: 15px;width: 15px;"/>
+            </button>
+
+            <table border="0" style="height: 30%;margin-top: 10px">
+                <tr style="height: 20px">
+                    <td style="width: 100px">姓名</td>
+                    <td style="width: 100px">编号</td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">张三</td>
+                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        {{MenuUserId}}
+                    </td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width: 100px">年龄</td>
+                    <td style="width: 100px">电话</td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="font-size: 20px;width: 100px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        24
+                    </td>
+                    <td style="font-size: 14px;width: 120px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        11025411234
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="float:left; width: 100%; height: 30%;margin-top: calc(100% - 200px); margin-left:5px;">
+            <table border="0">
+                <tr style="height: 20px">
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuHuJiao"><img src="images/btn_RYHJ.png"/></button>
+                    </td>
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuDingWei"><img src="images/btn_RYDW.png"/></button>
+                    </td>
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuGuiJi"><img src="images/btn_RYGJ.png"/></button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+        <!-- <button id='LiShiBtn'>dianji</button>-->
+    </div>
+</div>
+<div id="middlePositionDiv"
+     style="width: 100%; height: 100%; z-index: 400; position: absolute; pointer-events: none;">
+    <button id="homeButton">
+        <img src="images/home.png" style="width: 30px;height: 30px; border-radius: 10%;">
+    </button>
+    <button id="btn3DChangeButton">
+        <img class="img23DButton"
+             src="images/MapFlog2D.png" style="width: 70px;height: 35px; border-radius: 10%;">
+    </button>
+
+    <div id="mapBaseLayerView0" style=" height:calc(100% - 300px);padding: 10px;">
+        <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">图层显隐控制：</div>
+        <div kendo-tree-view="tree"
+             id="treeview"
+             k-data-source="treeData"
+             k-on-check="onChecked(this)"
+             k-checkboxes="{checkChildren: true}"
+             ng-controller="MapManager2DControl" style="margin-top: 10px;height: 470px;">
+            <span k-template>{{dataItem.text}}</span>
+        </div>
+    </div>
+
+
+    <button id="layerChange" ONCLICK="layer2DChanged()">
+        <img class="imgInButton"
+             src="images/layer-change-button-N.png" style="width: 30px;height: 30px; border-radius: 10%;">
+    </button>
+
+    <button id="drawerChangeButton"><img src="images/shrink-icon-Da-N.png"
+                                         style="width: 30px;height: 30px; border-radius: 10%;"/></button>
+</div>
+
+<script>
+    /**
+     * Created by SYS on 2016/4/29.
+     */
+
+    var reposition = function () {
+        var obj = $(".background-gridItem");
+        $('#middlePositionDiv').css('left', obj.css('left')).css('top', obj.css('top')).css('width', obj.css('width')).css('height', obj.css('height'));
+    };
+    reposition();
+    $(".background-gridItem").unbind("sizeChanged").bind("sizeChanged", function (event) {
+        var parent = $('#middlePositionDiv').closest('.background');
+        if (parent.length > 0) {
+            $('#drawerChangeButton').show();
+            reposition();
+        } else {
+            // 最大化模式
+
+            $('#middlePositionDiv').css({
+                'position': 'absolute',
+                'height': '100%',
+                'width': '100%',
+                'top': '0',
+                'left': '0'
+            });
+            $('#drawerChangeButton').hide();
+        }
+    });
+    var layer2DChanged = function () {
+
+
+        if ($('#mapBaseLayerView0').css('display') == 'block') {
+
+            $('#mapBaseLayerView0').css('display', 'none')
+            $('.imgInButton').attr('src', 'images/layer-change-button-N.png');
+            // $('#layerChange').css('background', '#64C0DF');
+
+
+        }
+        else {
+
+            $('#mapBaseLayerView0').css('display', 'block');
+            $('.imgInButton').attr('src', 'images/layer-change-button-S.png');
+            //$('#layerChange').css('background', '#FE8301');
+        }
+    };
+
+    if (window.CurrentMapWindowFlag == 0) {
+        $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Da-N.png');
+    } else {
+        $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Xiao-N.png');
+    }
+</script>
+
+<script>
+    require(['app', 'layoutCache', 'pubsub', 'jquery', 'customScrollbar', 'kendo'], function (rAppModule, layoutCache, PubSub, $) {
+        var Config = {
+            Map2D: {
+                TiledMapURl: "", FeiZhuYaoRenYuanRealTimeMapURl: "", ZhuyaoRenyuanRealTimeMapURl: "", OldTimeMapRUL: "",
+                MapCenter: [], MaxZoom: {}, MinZoom: {}, Zoom: {}
+            },
+            Map3D: {}
+        };
+        $.getJSON("data/AppConfig.json", function (obj) {
+
+            Config.Map2D.TiledMapURl = obj.Map2D.TiledMapURl;
+            Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl = obj.Map2D.FeiZhuYaoRenYuanRealTimeMapURl;
+            Config.Map2D.ZhuyaoRenyuanRealTimeMapURl = obj.Map2D.ZhuyaoRenyuanRealTimeMapURl;
+            Config.Map2D.OldTimeMapRUL = obj.Map2D.OldTimeMapRUL;
+            Config.Map2D.MapCenter = obj.Map2D.MapCenter;
+            Config.Map2D.MaxZoom = obj.Map2D.MaxZoom;
+            Config.Map2D.MinZoom = obj.Map2D.MinZoom;
+            Config.Map2D.Zoom = obj.Map2D.Zoom;
+            InitMap2D();
+        });
+
+        var AllLayersDic = new Array()
+        var index = 0
+        var LeafLeat2DView;
+        var queryLayer;
+
+        var InitMap2D = function () {
+            LeafLeat2DView = L.map('map', {
+                drawControl: true,
+                center: Config.Map2D.MapCenter,
+                zoom: Config.Map2D.Zoom
+            });
+            var layer = L.esri.tiledMapLayer({
+                name: "layer1",
+                url: Config.Map2D.TiledMapURl,
+                detectRetina: false,
+                minZoom: Config.Map2D.MinZoom,
+                maxZoom: Config.Map2D.MaxZoom
+            }).addTo(LeafLeat2DView);
+
+            <!--聚类 主要人员图层-->
+            var testIndex = 1;
+            var cluster = L.esri.Cluster.clusteredFeatureLayer({
+                url: Config.Map2D.ZhuyaoRenyuanRealTimeMapURl + "/0",
+                spiderfyOnMaxZoom: false,
+                disableClusteringAtZoom: 18,
+                where: "1=1",
+                pointToLayer: function (geojson, latlng) {
+                       var direction = (geojson.properties.UserID);
+
+                    var zyryMarker;
+                    if (testIndex % 3 == 0) {
+                        testIndex++;
+                        zyryMarker = L.marker(latlng, {
+                            icon: L.icon({
+                                iconUrl: 'images/ZYRY_OnLine.png',
+                                iconRetinaUrl: 'images/ZYRY_OnLine.png',
+                                iconSize: [20, 30],
+                                iconAnchor: [10, 15],
+                                popupAnchor: [0, -10],
+                                /*className: 'ShangXian'*/
+                            }),
+                            clickable: true,
+                            riseOnHover: true,
+                            title: direction
+                        });
+                    } else if (testIndex % 3 == 1) {
+                        testIndex++;
+                        zyryMarker = L.marker(latlng, {
+                            icon: L.icon({
+                                iconUrl: 'images/ZYRY_HuJiao.png',
+                                iconRetinaUrl: 'images/ZYRY_HuJiao.png',
+                                iconSize: [36, 30],
+                                iconAnchor: [10, 15],
+                                popupAnchor: [0, -10],
+                                /*className: 'ShangXian'*/
+                            }),
+                            clickable: true,
+                            riseOnHover: true,
+                            title: direction
+                        });
+                    }
+                    else {
+                        testIndex++;
+                        zyryMarker = L.marker(latlng, {
+                            icon: L.icon({
+                                iconUrl: 'images/ZYRY_OffLine.png',
+                                iconRetinaUrl: 'images/ZYRY_OffLine.png',
+                                iconSize: [20, 30],
+                                iconAnchor: [10, 15],
+                                popupAnchor: [0, -10],
+                                /*className: 'ShangXian'*/
+                            }),
+                            clickable: true,
+                            riseOnHover: true,
+                            title:direction
+                        });
+                    }
+                    //zyryMarker.on('contextmenu', MarkerClick);
+
+                    zyryMarker.bindPopup(function (feature) {
+                        //var userID = feature.properties.UserID;
+                        MarkerClick(feature);
+                    });
+                    return zyryMarker;
+                }
+            });
+            LeafLeat2DView.addLayer(cluster);
+            AllLayersDic['主要人员标注图层'] = cluster;
+
+            /*          cluster.bindPopup(function (feature) {
+             var userID = feature.properties.UserID;
+             //MarkerClick(feature);
+             /!*return L.Util.template('<strong>UserID:{UserID}</strong><br><strong>X:{X}</strong><br><strong>Y:{Y}</strong>', feature.properties);*!/
+             return false;
+             });*/
+
+            <!-- 根据时间筛选 非主要人员图层-->
+            var oilWells = L.esri.dynamicMapLayer({
+                url: Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl,
+                useCors: false,
+                layers: [0],
+                f: 'UpdateTime',
+                from: new Date('2015-12-17'),
+                to: new Date('2015-12-18'), style: {
+                    color: '#2d84c8',
+                    weight: 4,
+                    opacity: 1,
+                    fillOpacity: 0.5
+                },
+            });
+            LeafLeat2DView.addLayer(oilWells);
+            AllLayersDic['非主要人员图层'] = oilWells;
+            var changguanTuceng = L.layerGroup();
+            LeafLeat2DView.addLayer(changguanTuceng);
+            AllLayersDic['场馆区域标注图层'] = changguanTuceng;
+            var polygon = L.polygon([
+                [33.756751, 113.4868], [35.756751, 120.4868],
+                [32.756751, 120.4868], [30.756751, 121.4868],
+            ], {
+                color: '#330', fillColor: "#03f"
+            }).addTo(changguanTuceng);
+
+            queryLayer = L.esri.featureLayer({url: Config.Map2D.OldTimeMapRUL + "/0"});
+            var LishiGuiJiTuceng = L.layerGroup();
+            LeafLeat2DView.addLayer(LishiGuiJiTuceng);
+            AllLayersDic['主要人员历史轨迹图层'] = LishiGuiJiTuceng;
+            //修改地图控件位置
+            tItem = $('.leaflet-control-zoom.leaflet-bar.leaflet-control');
+            tBrother = $('#layerChange');
+            tBrother.after(tItem);
+            tItem.css('left', ' calc(100% - 28px)');
+            tItem.css('top', '35px');
+            tItem.css('margin', 0);
+            /*
+             tItem.css('background', '#66ccff');
+             tItem.css('color', 'red');
+             */
+
+            <!-- 比例尺-->
+            L.control.scale({imperial: false, position: 'bottomleft'}).addTo(LeafLeat2DView);
+            scaleControl = $('.leaflet-control-scale.leaflet-control');
+            tBrother.after(scaleControl);
+            $('.leaflet-control-scale.leaflet-control').css('left', scaleControl.css('left')).css('top', scaleControl.css('top'));
+            //scaleControl.css('left', '12px').css('top',  '827px');
+
+            <!--地图单击 -->
+            /*            var popup = L.popup();
+             function onMapClick(e) {
+             popup
+             .setLatLng(e.latlng)
+             .setContent('views/MouseMenu.html')
+             .openOn(LeafLeat2DView);
+             };
+             LeafLeat2DView.on('click', onMapClick);*/
+            LeafLeat2DView.on('move', onMapMove);
+        };
+
+        var onMapMove = function (e) {
+
+            if (LastSelectedItem) {
+                SetMenuPosion(LastSelectedItem);
+            }
+        }
+        var LastSelectedItem;
+        var MarkerClick = function (target) {
+
+
+            //rAppModule.MenuUserId=target.feature.properties.UserID;
+
+            var ll = new L.latLng(target.feature.properties.Y, target.feature.properties.X);
+
+            var screenPoint = LeafLeat2DView.latLngToContainerPoint(ll);
+
+            if (screenPoint.y >= 170) {
+                $("#MenuWindow").css('margin-top', -170).css('margin-left', 10);
+            } else {
+                $("#MenuWindow").css('margin-top', 0).css('margin-left', 10);
+            }
+            $("#MenuWindow").css('display', 'block').css('left', screenPoint.x).css('top', screenPoint.y).css('width', 210).css('height', 170);
+
+            LastSelectedItem = target;
+
+            PubSub.publish('MenuManagerSelectedItem2D', LastSelectedItem);
+        }
+
+        var SetMenuPosion = function (target) {
+            var ll = new L.latLng(target.feature.properties.Y, target.feature.properties.X);
+            var screenPoint = LeafLeat2DView.latLngToContainerPoint(ll);
+            $("#MenuWindow").css('display', 'block').css('left', screenPoint.x).css('top', screenPoint.y).css('width', 210).css('height', 170);
+        }
+
+        $('#btnMenuClose').unbind('click').bind('click', function () {
+
+            $("#MenuWindow").css('display', 'none');
+            LastSelectedItem = undefined;
+        });
+        $('#btnMenuHuJiao').unbind('click').bind('click', function () {
+
+            alert("呼叫" + LastSelectedItem.feature.properties.UserID);
+        });
+        $('#btnMenuDingWei').unbind('click').bind('click', function () {
+
+            alert("定位" + LastSelectedItem.feature.properties.UserID);
+        });
+        $('#btnMenuGuiJi').unbind('click').bind('click', function () {
+
+            QueryFunction(LastSelectedItem.feature.properties.UserID);
+        });
+
+        $('#drawerChangeButton').unbind('click').bind('click', function () {
+            if (window.CurrentMapWindowFlag == 0) {
+                layoutCache.application.miniSize([0], [0, 2]);
+                $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Xiao-N.png');
+                window.CurrentMapWindowFlag = 1;
+            } else {
+                layoutCache.application.maxiSize([0], [0, 2]);
+                $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Da-N.png');
+                window.CurrentMapWindowFlag = 0;
+            }
+        });
+
+
+        $('#btn3DChangeButton').unbind('click').bind('click', function () {
+
+            PubSub.publish('Map23WeiChanged', '三维');
+            PubSub.unsubscribe('MapLayer2DChanged');
+        });
+
+
+        var viewHome = function (x, y) {
+            LeafLeat2DView.panTo(L.latLng(x, y));
+
+        };
+        $('#homeButton').unbind('click').bind('click', function () {
+
+
+            viewHome(30.756751, 120.4868);
+
+        });
+        PubSub.subscribe('MapLayer2DChanged', function (checkedNodes) {
+            for (var i in AllLayersDic) {
+                LeafLeat2DView.removeLayer(AllLayersDic[i]);
+            }
+            if (checkedNodes.length > 0) {
+
+                for (var i = 0; i < checkedNodes.length; i++) {
+                    var item = checkedNodes[i];
+                    if (!!AllLayersDic[item]) {
+                        LeafLeat2DView.addLayer(AllLayersDic[item]);
+                    }
+                }
+            }
+        });
+
+        //查询主要人员历史轨迹
+        var QueryFunction = function (userid) {
+
+
+            for (var i = AllLayersDic['主要人员历史轨迹图层'].length - 1; i >= 0; i--) {
+                AllLayersDic['主要人员历史轨迹图层'].removeAt(i);
+            }
+            var polyline = L.polyline([[30.756751, 120.4868], [29.756751, 119.4868], [31.756751, 118.4868], [28.756751, 117.4868], [27.756751, 116.4868]],
+                    {color: 'red', clickable: true, opacity: 1, weight: 3}).addTo(AllLayersDic['主要人员历史轨迹图层']);
+
+            queryLayer.query()
+                    .where("UpdateTime> CONVERT(datetime,'2015-11-01',121) and UpdateTime< CONVERT(datetime,'2015-12-18 14:15:00',121) and userid="+userid)
+                    .orderBy('UpdateTime', 'ASC')
+                    .run(function (error, featureCollection) {
+
+                                var pointArr = new Array();
+                                var ss = featureCollection;
+                                for (var i = 0; i < featureCollection.features.length; i++) {
+                                    var point = [featureCollection.features[i].properties.Y, featureCollection.features[i].properties.X];
+                                    pointArr.push(point);
+                                }
+                                L.polyline(pointArr, {
+                                    color: 'red',
+                                    clickable: true,
+                                    opacity: 1,
+                                    weight: 3
+                                }).addTo(AllLayersDic['主要人员历史轨迹图层']);
+
+                            }
+                    );
+
+
+        }
+
+
+    });
+
+
+</script>
+

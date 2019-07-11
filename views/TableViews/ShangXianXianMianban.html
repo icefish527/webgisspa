@@ -1,0 +1,12 @@
+<div id="grid"
+     style="height:calc(100% - 10px)"
+     kendo-grid
+     k-options="Options"
+     ng-controller="lineController">
+</div>
+<script type="text/javascript">
+    //没有这里的话Grid的高就为固定高，去掉固定高样式
+    require(['jquery'], function ($) {
+        $(".k-grid-content").attr("style", "");
+    });
+</script>

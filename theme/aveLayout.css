@@ -1,0 +1,289 @@
+﻿/*主框架结构样式*/
+
+#mainFrame {
+    display: inline-block;
+    width: 100%;
+}
+
+#layout1Panel {
+    height: 100%;
+    width: 100%;
+    max-width: 1920px;
+    float: left;
+}
+
+#layout2Panel {
+    height: 100%;
+    margin-left: 1920px;
+    display: none;
+}
+
+.layoutContainer {
+    height: calc(100% - 0px);
+    /*border: 1px solid #333;*/
+    /*margin: 4px;*/
+    position: relative;
+}
+
+.layout-grid-container {
+    box-sizing: border-box;
+}
+
+/* 布局单元格样式 Override*/
+.gridItem {
+    border: 1px solid rgba(0, 163, 217, 0.85);
+    margin: 4px;
+    z-index: 99;
+}
+
+.nonborder{
+    border: 0;
+}
+
+.background-gridItem {
+    margin: 2px
+}
+
+.background {
+    display: block;
+    position: relative;
+    z-index: 0;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*background-color: #ccc;*/
+    /*margin: 2px*/
+}
+
+/*布局单元格样式*/
+
+.layout-item-template {
+    display: none;
+}
+
+.layout-item {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.layout-item-header {
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: rgba(39, 47, 51, 0.85);
+    padding: 6px 0 6px 0;
+}
+
+.layout-item-container {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: calc(100% - 32px);
+}
+
+.layout-item button {
+    float: right;
+    width: 30px;
+    margin-right: 6px;
+}
+
+.layout-item-name {
+    height: 100%;
+    float: left;
+    line-height: 20px;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 18px;
+    color: #fff;
+}
+
+.layout-item-buttons {
+    float: right;
+    width: auto;
+}
+
+.layout-item-buttons button {
+    width: 30px;
+    height: 26px;
+    border: 0;
+    padding: 0;
+    margin-top: -3px;
+    background: #64C0DF;
+    cursor: pointer;
+}
+
+.layout-item-buttons button:hover {
+    background: #99DDFF;
+}
+
+/*总分层叠式布局单元格样式*/
+.layout-backgrounditem-template {
+    display: none;
+}
+
+.layout-backgrounditem {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.layout-backgrounditem-header {
+    display: block;
+    width: 100%;
+    height: 20px;
+    background: #00b5f1;
+    padding: 5px 0 5px 0;
+}
+
+.layout-backgrounditem-container {
+    display: block;
+    height: calc(100% - 30px);
+}
+
+.layout-backgrounditem button {
+    float: right;
+    width: 70px;
+    margin-right: 10px;
+}
+
+.layout-backgrounditem-name {
+    height: 100%;
+    float: left;
+    line-height: 20px;
+    padding-left: 15px;
+    text-align: left;
+    text-size: 20pt;
+    color: #fff;
+}
+
+.layout-backgrounditem-buttons {
+    float: right;
+    width: auto;
+}
+
+/*两种视图切换显隐样式*/
+.layout-normal-show {
+    display: block;
+}
+
+.layout-normal-hide {
+    display: none;
+}
+
+.layout-snap-show {
+    display: block;
+}
+
+.layout-snap-hide {
+    display: none;
+}
+
+/*snap视图的样式*/
+.layout-maximize-container .viewList {
+    float: right;
+    height: calc(100% - 2px);
+    width: 200px;
+    border: 1px solid #00a3d9;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.layout-maximize-container .currentView {
+    height: calc(100% - 2px);
+    margin-right: 206px;
+    border: 1px solid #00a3d9;
+    background: #000;
+}
+
+/*snap视图中最小化视图模板*/
+.snap-miniview-template {
+    display: none;
+}
+
+.snap-miniview {
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.snap-miniview .snap-miniview-name {
+    margin-left: 10px;
+    color: #fff;
+    float: left;
+    line-height: 35px;
+}
+
+.snap-miniview .snap-miniview-buttons {
+    width: 30px;
+    height: 26px;
+    padding-right: 10px;
+    float: right;
+}
+
+.snap-miniview button {
+    width: 30px;
+    height: 26px;
+    border: 0;
+    padding: 0;
+    background-color: #64C0DF;
+}
+
+.snap-miniview button:hover {
+    background-color: #99DDFF;
+}
+
+/*snap当前视图模板样式*/
+.snap-curview-template {
+    display: none;
+}
+
+.snap-curview {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.snap-curview-header {
+    display: block;
+    width: 100%;
+    height: 30px;
+    background-color: rgba(39, 47, 51, 0.85);
+}
+
+.snap-curview-container {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: calc(100% - 30px);
+    position: relative;
+}
+
+.snap-curview button {
+    float: right;
+    width: 30px;
+    height: 26px;
+    margin-right: 6px;
+    border: 0;
+    padding: 0;
+    background-color: #64C0DF;
+    margin-top: 2px;
+}
+
+.snap-curview button:hover {
+    background-color: #99DDFF;
+}
+
+.snap-curview-name {
+    height: 100%;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 18px;
+    color: #fff;
+}
+
+.snap-curview-buttons {
+    float: right;
+    width: auto;
+    height: 100%;
+}

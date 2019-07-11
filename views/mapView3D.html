@@ -1,0 +1,619 @@
+<link rel="stylesheet" href="css/mapView3D.css"/>
+<div style="width: 100%; height: 100%; float: left;">
+
+    <div id='map'></div>
+</div>
+
+<div id="MenuWindow" style="display:none;width:210px; height:170px; z-index: 400; position: absolute;"  ng-controller="MenuManagerControl">
+    <div id="ContentWindow">
+        <div style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
+
+            <button class="menuCloseBTn" id="btnMenuClose">
+                <img src="images/close-button-image.png" style="width: 15px;width: 15px;"/>
+            </button>
+
+            <table border="0" style="height: 30%;margin-top: 10px">
+                <tr style="height: 20px">
+                    <td style="width: 100px">姓名</td>
+                    <td style="width: 100px">编号</td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">张三</td>
+                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        {{MenuUserId}}
+                    </td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width: 100px">年龄</td>
+                    <td style="width: 100px">电话</td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="font-size: 20px;width: 100px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        24
+                    </td>
+                    <td style="font-size: 14px;width: 120px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
+                        11025411234
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="float:left; width: 100%; height: 30%;margin-top: calc(100% - 200px); margin-left:5px;">
+            <table border="0">
+                <tr style="height: 20px">
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuHuJiao"><img src="images/btn_RYHJ.png"/></button>
+                    </td>
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuDingWei"><img src="images/btn_RYDW.png"/></button>
+                    </td>
+                    <td style="width: 65px">
+                        <button class="MenuButton" id="btnMenuGuiJi"><img src="images/btn_RYGJ.png"/></button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+        <!-- <button id='LiShiBtn'>dianji</button>-->
+    </div>
+</div>
+<div id="middlePositionDiv"
+     style="width: 100%; height: 100%; z-index: 400; position: absolute; pointer-events: none;">
+
+    <button id="homeButton" style="border: none">
+        <img src="images/home.png" style="width: 31px;
+        height: 31px;"/>
+    </button>
+
+
+    <button id="btn2DChangeButton">
+        <img class="img23DButton"
+             src="images/MapFlog3D.png" style="width: 70px;height: 35px; border-radius: 10%;">
+    </button>
+
+
+    <div id="mapBaseLayerView0" style=" height:calc(100% - 300px);padding: 10px;">
+        <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">图层显隐控制：</div>
+        <div kendo-tree-view="tree"
+             id="treeview"
+             k-data-source="treeData"
+             k-on-check="onChecked(this)"
+             k-checkboxes="{checkChildren: true}"
+             ng-controller="MapManager3DControl" style="margin-top: 10px">
+            <span k-template>{{dataItem.text}}</span>
+        </div>
+    </div>
+
+    <button id="layerChange3D" ONCLICK="layerChanged()">
+        <img class="imgInButton"
+             src="images/layer-change-button-N.png" style="width: 30px;height: 30px; border-radius: 10%;">
+    </button>
+    <button id="drawerChangeButton"><img src="images/shrink-icon-Da-N.png"
+                                         style="width: 30px;height: 30px; border-radius: 10%;"/></button>
+</div>
+<script>
+    var reposition = function () {
+        var obj = $(".background-gridItem");
+        $('#middlePositionDiv').css('left', obj.css('left')).css('top', obj.css('top')).css('width', obj.css('width')).css('height', obj.css('height'));
+    };
+    reposition();
+    $(".background-gridItem").unbind("sizeChanged").bind("sizeChanged", function (event) {
+        var parent = $('#middlePositionDiv').closest('.background');
+        if (parent.length > 0) {
+            $('#drawerChangeButton').show();
+            reposition();
+        } else {
+            // 最大化模式
+
+            $('#middlePositionDiv').css({
+                'position': 'absolute',
+                'height': '100%',
+                'width': '100%',
+                'top': '0',
+                'left': '0'
+            });
+            $('#drawerChangeButton').hide();
+        }
+
+    });
+    var layerChanged = function () {
+
+        if ($('#mapBaseLayerView0').css('display') == 'block') {
+
+            $('#mapBaseLayerView0').css('display', 'none')
+            $('.imgInButton').attr('src', 'images/layer-change-button-N.png');
+
+
+        }
+        else {
+            $('#mapBaseLayerView0').css('display', 'block');
+            $('.imgInButton').attr('src', 'images/layer-change-button-S.png');
+        }
+    };
+    if (window.CurrentMapWindowFlag == 0) {
+        $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Da-N.png');
+    } else {
+        $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Xiao-N.png');
+    }
+    ;
+
+
+</script>
+
+<script>
+    require(['app', 'layoutCache', 'pubsub', 'customScrollbar','jquery'], function (rAppModule, layoutCache, PubSub,cus,$) {
+
+        $('#drawerChangeButton').unbind('click').bind('click', function () {
+            if (window.CurrentMapWindowFlag == 0) {
+                layoutCache.application.miniSize([0], [0, 2]);
+                $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Xiao-N.png');
+                window.CurrentMapWindowFlag = 1;
+            } else {
+                layoutCache.application.maxiSize([0], [0, 2]);
+                $('#drawerChangeButton img').attr('src', 'images/shrink-icon-Da-N.png');
+                window.CurrentMapWindowFlag = 0;
+            }
+        });
+
+        $('#btn2DChangeButton').unbind('click').bind('click', function () {
+
+            PubSub.publish('Map23WeiChanged', '二维');
+            PubSub.unsubscribe('MapLayer3DChanged');
+        });
+
+        var Config = {
+            Map2D: {
+                TiledMapURl: "", DynamicMapLayerMapURL: "", RealTimeMapURl: "", OldTimeMapRUL: "",
+                MapCenter: [], MaxZoom: {}, MinZoom: {}, Zoom: {}
+            },
+            Map3D: {
+                TiledMapURl: "", MapCenter: [], MaxZoom: {}, MinZoom: {}, Zoom: {}
+
+            }
+        };
+        $.getJSON("data/AppConfig.json", function (obj) {
+
+
+            Config.Map2D.TiledMapURl = obj.Map2D.TiledMapURl;
+            Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl = obj.Map2D.FeiZhuYaoRenYuanRealTimeMapURl;
+            Config.Map2D.ZhuyaoRenyuanRealTimeMapURl = obj.Map2D.ZhuyaoRenyuanRealTimeMapURl;
+            Config.Map2D.OldTimeMapRUL = obj.Map2D.OldTimeMapRUL;
+            Config.Map2D.MapCenter = obj.Map2D.MapCenter;
+            Config.Map2D.MaxZoom = obj.Map2D.MaxZoom;
+            Config.Map2D.MinZoom = obj.Map2D.MinZoom;
+            Config.Map2D.Zoom = obj.Map2D.Zoom;
+
+            Config.Map3D.TiledMapURl = obj.Map3D.TiledMapURl;
+            Config.Map3D.MapCenter = obj.Map3D.MapCenter;
+            Config.Map3D.MaxZoom = obj.Map3D.MaxZoom;
+            Config.Map3D.MinZoom = obj.Map3D.MinZoom;
+            Config.Map3D.Zoom = obj.Map3D.Zoom;
+            InitMap3D();
+        });
+
+        var AllLayersDic = new Array()
+        AllLayersDic['非主要人员图层'] = {};
+        AllLayersDic['场馆区域标注图层'] = {};
+        AllLayersDic['主要人员历史轨迹图层'] = {};
+        AllLayersDic['主要人员标注图层'] = {};
+
+        // 默认东半球的rectangle，用于viewHome时自动定位到东半球
+        var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(115.1, 20.0, 125.10001, 35.00001);
+        var viewHome = function () {
+
+
+            Cesium3DViewer.trackedEntity = undefined;
+
+
+            var scene = Cesium3DViewer.scene;
+            var duration = 1.5;
+            var mode = scene.mode;
+
+            if (scene && mode === Cesium.SceneMode.MORPHING) {
+                scene.completeMorph();
+            }
+
+            if (mode === Cesium.SceneMode.SCENE2D) {
+                scene.camera.flyTo({
+                    destination: Cesium.Rectangle.MAX_VALUE,
+                    duration: duration,
+                    endTransform: Cesium.Matrix4.IDENTITY
+                });
+            } else if (mode === Cesium.SceneMode.SCENE3D) {
+                var destination = scene.camera.getRectangleCameraCoordinates(DEFAULT_EASTERN_RECTANGLE);
+                var mag = Cesium.Cartesian3.magnitude(destination);
+                mag += mag * Cesium.Camera.DEFAULT_VIEW_FACTOR;
+                Cesium.Cartesian3.normalize(destination, destination);
+                Cesium.Cartesian3.multiplyByScalar(destination, mag, destination);
+
+                scene.camera.flyTo({
+                    destination: destination,
+                    duration: duration,
+                    endTransform: Cesium.Matrix4.IDENTITY
+                });
+            } else if (mode === Cesium.SceneMode.COLUMBUS_VIEW) {
+                var maxRadii = scene.globe.ellipsoid.maximumRadius;
+                var position = new Cesium.Cartesian3(0.0, -1.0, 1.0);
+                position = Cesium.Cartesian3.multiplyByScalar(Cesium.Cartesian3.normalize(position, position), 5.0 * maxRadii, position);
+                scene.camera.flyTo({
+                    destination: position,
+                    duration: duration,
+                    orientation: {
+                        heading: 0.0,
+                        pitch: -Math.acos(Cesium.Cartesian3.normalize(position, new Cesium.Cartesian3()).z),
+                        roll: 0.0
+                    },
+                    endTransform: Cesium.Matrix4.IDENTITY,
+                    convert: false
+                });
+            }
+        };
+        var FeiZhuyaoRenYuanLayer;
+        var ZhuyaoRenYuanLayer;
+        var LiShiGuiJiLayer;
+        var Cesium3DViewer;
+        var InitMap3D = function () {
+
+
+            var imagerylayer = new Cesium.OpenStreetMapImageryProvider({
+                url: Config.Map3D.TiledMapURl,
+            });
+            var arcgislayer=new Cesium.ArcGisMapServerImageryProvider({url:"http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",});
+            arcgislayer.
+            Cesium3DViewer = new Cesium.Viewer('map', {
+                // 关闭所有的插件
+                animation: false,
+                baseLayerPicker: false,
+                fullscreenButton: false,
+                vrButton: false,
+                geocoder: false,
+                homeButton: false,
+                infoBox: false,
+                sceneModePicker: false,
+                selectionIndicator: false,
+                timeline: false,
+                navigationHelpButton: false,
+                imageryProvider: arcgislayer
+            });
+
+
+            FeiZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.FeiZhuYaoRenYuanRealTimeMapURl + "/0"});
+            ZhuyaoRenYuanLayer = L.esri.featureLayer({url: Config.Map2D.ZhuyaoRenyuanRealTimeMapURl + "/0"});
+            LiShiGuiJiLayer = L.esri.featureLayer({url: Config.Map2D.OldTimeMapRUL + "/0"});
+
+
+            queryZhuYaoRenYuanAddToMap();
+            queryFeiZhuYaoRenYuanAddToMap();
+            ZhuYaoChangGuanQuYuAddToMap();
+            queryZhuYaoRenYuanLiShiGuiJiAddToMap();
+            Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
+                var entity = pickEntity(Cesium3DViewer, e);
+                if (entity) {
+                    EntyClick(entity,e)
+                }
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+            Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
+                CloseMenuWindow();
+            }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+            Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
+                CloseMenuWindow();
+            }, Cesium.ScreenSpaceEventType.MIDDLE_DOWN);
+            Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
+                CloseMenuWindow();
+            }, Cesium.ScreenSpaceEventType.WHEEL);
+            Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
+                CloseMenuWindow();
+            }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
+
+
+
+            viewHome();
+        };
+        //查询主要人员，并绘制到地图
+        var testIndex = 1;
+        var queryZhuYaoRenYuanAddToMap = function () {
+
+            for (var i = AllLayersDic['主要人员标注图层'].length - 1; i >= 0; i--) {
+                AllLayersDic['主要人员标注图层'].removeAt(i);
+            }
+            ZhuyaoRenYuanLayer.query().where(" 1=1 ")
+                    .run(function (error, featureCollection) {
+                        for (var i = 0; i < featureCollection.features.length; i++) {
+                            var userID = featureCollection.features[i].properties.UserID;
+                            var imageurl = 'images/ZYRY_OnLine.png';
+                            if (testIndex % 3 == 0) {
+                                imageurl = 'images/ZYRY_OnLine.png';
+                            } else if (testIndex % 3 == 1) {
+                                imageurl = 'images/ZYRY_HuJiao.png';
+                            } else if (testIndex % 3 == 2) {
+                                imageurl = 'images/ZYRY_OffLine.png';
+                            }
+                            ;
+                            testIndex++;
+                            var origin = Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y, 20);
+                            var zhuyaorenyuan = Cesium3DViewer.entities.add({
+                                id: userID,
+                                name: userID,
+                                show: true,
+                                position: origin,
+                                billboard: {
+                                    image: imageurl,
+                                    scale: 0.5,
+                                    show: true
+                                },
+                                label: {
+                                    text: "主要人员",
+                                    font: '14pt monospace',
+                                    scale: 0.5,
+                                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                                    outlineWidth: 2,
+                                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                                    pixelOffset: new Cesium.Cartesian2(0, -9)
+                                }
+                            });
+                            AllLayersDic['非主要人员图层'][userID] = zhuyaorenyuan;
+                        }
+                    });
+        };
+
+        //主要人员历史轨迹
+        var queryZhuYaoRenYuanLiShiGuiJiAddToMap = function () {
+            <!-- 根据时间筛选 非主要人员图层-->
+            for (var i = AllLayersDic['主要人员历史轨迹图层'].length - 1; i >= 0; i--) {
+                AllLayersDic['主要人员历史轨迹图层'].removeAt(i);
+            }
+
+            var userID = '1002';
+            LiShiGuiJiLayer.query()
+                    .where("UpdateTime> CONVERT(datetime,'2015-11-01',121) and UpdateTime< CONVERT(datetime,'2015-12-18 14:15:00',121) and userid=" + userID)
+                    .orderBy('UpdateTime', 'ASC')
+                    .run(function (error, featureCollection) {
+
+                                var pointArr = new Array();
+                                var ss = featureCollection;
+                                for (var i = 0; i < featureCollection.features.length; i++) {
+                                    /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
+                                    pointArr.push(featureCollection.features[i].properties.X);
+                                    pointArr.push(featureCollection.features[i].properties.Y);
+                                }
+
+                                var redLine = Cesium3DViewer.entities.add({
+                                    name: 'Red line on the surface',
+                                    polyline: {
+                                        positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
+                                            118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
+                                        width: 1,
+                                        material: Cesium.Color.RED
+                                    }
+                                });
+
+                                var lishiGuiJi = Cesium3DViewer.entities.add({
+                                    polyline: {
+                                        positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
+                                        width: 2,
+                                        material: Cesium.Color.RED
+                                    }
+                                });
+                                AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
+
+                            }
+                    );
+        };
+
+        //查询非主要人员，并绘制到地图
+        var queryFeiZhuYaoRenYuanAddToMap = function () {
+            <!-- 根据时间筛选 非主要人员图层-->
+            for (var i = AllLayersDic['非主要人员图层'].length - 1; i >= 0; i--) {
+                AllLayersDic['非主要人员图层'].removeAt(i);
+            }
+            FeiZhuyaoRenYuanLayer.query().where(" 1=1 ")
+                    .run(function (error, featureCollection) {
+                        for (var i = 0; i < featureCollection.features.length; i++) {
+                            var userID = featureCollection.features[i].properties.UserID;
+
+                            var feizhuyaorenyuan = Cesium3DViewer.entities.add({
+                                id: userID,
+                                position: Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y),
+                                point: {
+                                    pixelSize: 3,
+                                    color: Cesium.Color.RED,
+                                    outlineColor: Cesium.Color.RED,
+                                    outlineWidth: 0
+                                }
+                            });
+                            AllLayersDic['非主要人员图层'][userID] = feizhuyaorenyuan;
+                        }
+                    });
+        };
+
+        //绘制主要场馆区域
+        var ZhuYaoChangGuanQuYuAddToMap = function () {
+
+            for (var i = AllLayersDic['场馆区域标注图层'].length - 1; i >= 0; i--) {
+                AllLayersDic['场馆区域标注图层'].removeAt(i);
+            }
+            for (var i = 0; i <= 10; i++) {
+                var origin = Cesium.Cartesian3.fromDegrees(Math.random() * 120.080842, Math.random() * 35.002073, 20.0);
+
+                var entity = Cesium3DViewer.entities.add({
+                    id: 'M' + i,
+                    name: "区域场馆",
+                    show: true,
+                    position: origin,
+                    model: {
+                        uri: 'data/models/Test.gltf',
+                        minimumPixelSize: 128,
+                        maximumScale: 20000,
+                        show: false,
+                        scale: 2.0,
+                        allowPicking: true,
+
+                    },
+                    billboard: {
+                        image: 'images/building-icon.png',
+                        scale: 0.5,
+                        show: true
+                    }
+                    ,
+                    label: {
+                        text: '场馆区域标注',
+                        font: '14pt monospace',
+                        scale: 0.5,
+                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                        outlineWidth: 2,
+                        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                        pixelOffset: new Cesium.Cartesian2(0, -9)
+                    }
+                });
+
+
+                AllLayersDic['场馆区域标注图层'][entity.id] = entity;
+            }
+
+
+            /*            var enty = Cesium3DViewer.entities.add({
+             id: 2,
+             name: '这是一个测试椭圆',
+             position: Cesium.Cartesian3.fromDegrees(115.47, 33.70),
+             ellipse: {
+             semiMinorAxis: 250000.0,
+             semiMajorAxis: 400000.0,
+             material: new Cesium.GridMaterialProperty({
+             color: Cesium.Color.YELLOW,
+             cellAlpha: 0.2,
+             lineCount: new Cesium.Cartesian2(8, 8),
+             lineThickness: new Cesium.Cartesian2(2.0, 2.0)
+             })
+             },
+             label: {
+             text: '这是一个测试椭圆',
+             font: '14pt monospace',
+             scale: 0.5,
+             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+             outlineWidth: 2,
+             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+             pixelOffset: new Cesium.Cartesian2(0, -9)
+             }
+             });
+             AllLayersDic['场馆区域标注图层'][enty.id] = enty;*/
+
+        };
+
+
+        var ClearEntity = function () {
+            Cesium3DViewer.entities.removeAll();
+        }
+
+        var RemoveEntity = function (ent) {
+            Cesium3DViewer.entities.remove(ent);
+        }
+
+        $('#homeButton').unbind('click').bind('click', function () {
+
+            viewHome();
+        });
+        //图层管理
+        PubSub.subscribe('MapLayer3DChanged', function (checkedNodes) {
+            ClearEntity();
+            for (var i = 0; i < checkedNodes.length; i++) {
+                var item = checkedNodes[i];
+                if (item == '主要人员标注图层') {
+                    queryZhuYaoRenYuanAddToMap();
+                } else if (item == '主要人员历史轨迹图层') {
+                    queryZhuYaoRenYuanLiShiGuiJiAddToMap();
+                } else if (item == '场馆区域标注图层') {
+                    ZhuYaoChangGuanQuYuAddToMap();
+                } else if (item == '非主要人员图层') {
+                    queryFeiZhuYaoRenYuanAddToMap();
+                }
+            }
+
+        });
+        function defaultValue(obj, value) {
+            if (!obj) return value;
+            else return obj;
+        }
+
+        function pickEntity(viewer, e) {
+            var picked = viewer.scene.pick(e.position);
+            if (picked) {
+                var id = defaultValue(picked.id, picked.primitive.id);
+                if (id instanceof Cesium.Entity) {
+                    return id;
+                }
+            }
+        }
+
+        var SetMenuPosion = function (position) {
+            if (position.y >= 170) {
+                $("#MenuWindow").css('margin-top', -170).css('margin-left', 10);
+            } else {
+                $("#MenuWindow").css('margin-top', 0).css('margin-left', 10);
+            }
+            $("#MenuWindow").css('display', 'block').css('left', position.x).css('top', position.y).css('width', 210).css('height', 170);
+        }
+
+      var  CloseMenuWindow=function()
+        {
+            if ($('#MenuWindow').css('display') == 'block')
+            {
+                $("#MenuWindow").css('display', 'none');
+            }
+        }
+
+        $('#btnMenuClose').unbind('click').bind('click', function () {
+
+            CloseMenuWindow();
+
+        });
+        $('#btnMenuHuJiao').unbind('click').bind('click', function () {
+
+            alert("呼叫" + LastSelectedItem.feature.properties.UserID);
+        });
+        $('#btnMenuDingWei').unbind('click').bind('click', function () {
+
+            alert("定位" + LastSelectedItem.feature.properties.UserID);
+        });
+        $('#btnMenuGuiJi').unbind('click').bind('click', function () {
+
+
+        });
+
+        var EntyClick = function (entity,e) {
+
+          /*  alert(entity.id);*/
+            PubSub.publish('MenuManagerSelectedItem3D', entity);
+
+            // 设置更新周期
+            SetMenuPosion(e.position);
+            MyInterval= setInterval(function () {
+                RefreshDongHua(entity);
+            }, 300);
+
+        }
+        var   MyInterval;
+        var JiSuoQi = 0;
+        var RefreshDongHua = function (entity) {
+
+
+            if (JiSuoQi % 2 == 0) {
+
+                entity.billboard.show = true;
+                //entity.billboard.scale = 1;
+            } else {
+
+                entity.billboard.show = false;
+                //entity.billboard.scale = 0.5;
+            }
+            JiSuoQi++;
+            if (JiSuoQi >= 10) {
+                JiSuoQi = 0;
+                clearInterval(MyInterval);
+                entity.billboard.show = true;
+            }
+        }
+
+    });
+</script>
+

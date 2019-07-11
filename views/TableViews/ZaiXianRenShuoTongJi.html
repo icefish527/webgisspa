@@ -1,0 +1,50 @@
+<div style="height:100%;padding: 5px;"
+     ng-controller="RenShuController">
+    <div id="RenShuTongJi" style="height: 100%;width: 75%;float: left"></div>
+    <div id="NumCount" style="width: 20%;float: right;">
+        <ol>
+            <li>
+                <span class="circleclass" style="background: #31C678;"></span>
+                <span class="name">总人数</span>
+                <br>
+                <span class="value" style="color: #31C678;" ng-bind="sumNum"></span>
+            </li>
+            <li>
+                <span class="circleclass" style="background: #2EC7C9;"></span>
+                <span class="name">上线人数</span>
+                <br>
+                <span class="value" style="color: #2EC7C9;" ng-bind="onLineNum"></span>
+            </li>
+            <li>
+                <span class="circleclass" style="background: #B6A2DE;"></span>
+                <span class="name">下线人数</span>
+                <br>
+                <span class="value" style="color: #B6A2DE;" ng-bind="outLineNum"></span>
+            </li>
+        </ol>
+    </div>
+</div>
+<style>
+    #NumCount ol li {
+        list-style: none;
+        height: 55px;
+        margin-left: -20px;
+    }
+    #NumCount ol li .circleclass{
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        float: left;
+        margin: 6px;
+    }
+    #NumCount ol li .name{
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+        color: #cccccc;
+    }
+    #NumCount ol li .value{
+        font-family: "Microsoft YaHei";
+        font-size: 24px;
+        text-align: left;
+    }
+</style>

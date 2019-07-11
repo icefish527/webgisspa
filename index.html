@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>第一个Web-SAP</title>
+
+   <!-- <link rel="stylesheet" href="css/leaflet.css"/>
+    <script src="js/leaflet.js"></script>
+    <script src="js/esri-leaflet.js"></script>-->
+
+
+    <!--leaflet 2D加载-->
+    <link rel="stylesheet" href="leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="leaflet/2.0.0-beta.8/esri-leaflet.js"></script>
+
+    <!-- 2D样式添加-->
+    <link rel="stylesheet" type="text/css" href="leaflet/v1.0.0-beta.2.0/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="leaflet/v1.0.0-beta.2.0/dist/MarkerCluster.css">
+    <script src="leaflet/v1.0.0-beta.2.0/dist/leaflet.markercluster.js"></script>
+    <script src="leaflet/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="leaflet/leaflet-responsive-attribution.css">
+
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/cesium.css" />
+    <script src="js/cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="css/kendo.common.min.css"/>
+    <link rel="stylesheet" href="css/kendo.black.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="js/avelayout/aveLayout.css">
+    <link rel="stylesheet" href="theme/main.css"/>
+
+    <script src="js/require.js" data-main="app/main.js"></script>
+    <script src="js/echart/echarts.js"></script>
+</head>
+<body class="containerLayout">
+<header data-options="region:'north', height: '100'" ng-controller="headerController"  class="containerLayout" background-url="images/TitleBg.png">
+
+    <div data-options="region:'west', width: '30%', min-width: 100, max-width: '470'">
+        <div class="themeContainerWrap">
+            <div class="themeContainerSubwrap">
+                <div class="themeContainerContent">
+
+                    <div id="applicationTitle">
+
+
+                        <div style="font-size: 50px;letter-spacing:1px; color: #FFFFFF;  margin-left: 5px; margin-top: 5px; font-family: digital_display;">
+                         <!--   {{ sysName }}-->
+                            <img src="images/SystemName.png"/>
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <div data-options="region:'center', width: '20%', min-width: 100, max-width: '250'"
+         >
+        <div class="themeContainerWrap" style="position: absolute; left: calc(100% - 490px); margin-top: 10px">
+            <div class="themeContainerSubwrap">
+                <div class="themeContainerContent">                    <!-- 标题左右居中 -->
+                    <div style="width: 600px; margin:0px auto; padding-left:20px;">
+                        <div style="float:left;">
+                            <div style="font-size: 21px;font-family: 'Segoe UI Light';letter-spacing:2px;margin-left: -150px;color: #B6B6B6; ">当前时间</div>
+                            <div style="float:left; width: 300px; height: 49px;  margin-top: 3px; margin-left:5px;">
+                                <div style="font-size: 26px; font-family: 'Segoe UI'; letter-spacing:1px; margin-top: -2px; color: #66CCFF;">
+                                    {{clock.currentTime }}   {{   clock.currentDate }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style=" float: left; background:#666;width:1px;height:51px;margin-left: 0px;margin-top: 0px;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-options="region:'east', width: '20%', min-width: 100, max-width: '380'"></div>
+    <div style="position: absolute; width: 375px; left: calc(100% - 375px); height: 100px; margin-top: 2px">
+        <div class="themeContainerWrap">
+            <div class="themeContainerSubwrap">
+
+                <!-- 标题右侧显示 -->
+                <div style="width: 220px; margin:0px auto; padding-right:0px;">
+                    <div style="float:left; width: 47px; height: 47px; background-image: url(images/admin.png); ">
+
+                    </div>
+                    <div style="float:left;margin-left: 10px">
+                        <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">Administrator</div>
+                        <div style="float: left; font-size: 18px;color: #CCCCCC; font-family: Segoe UI; letter-spacing:1px; margin-left: 2px; margin-top: -2px; ">
+                            管理员
+                        </div>
+                    </div>
+                </div>
+                <div style=" float: left; background:#666;width:1px;height:51px;margin-left: 15px;margin-top: 0px;"></div>
+                <!-- 菜单按钮 -->
+                <button style="float:left; cursor:pointer; width:25px; height:29px; margin-left:14px; margin-top:10px;
+                               background:url(images/close-button-image.png) no-repeat; border:0;"
+                        ng-click="menuClick()"></button>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- 内容 -->
+<div class="containerLayout containerLayout--h" data-options="region:'center'"
+     id="mainContentWrap">
+    <div style="height: 100%;" ng-controller="bodyController">
+        <!-- AVE布局控件内容 开始 -->
+        <div id="layout1Panel">
+            <div class="layoutContainer layout-grid-container">
+            </div>
+
+            <div class="layoutContainer layout-maximize-container" style="display: none;">
+                <div class="viewList"></div>
+                <div class="currentView"></div>
+            </div>
+        </div>
+
+        <!--用于双屏显示：第二屏-->
+        <div id="layout2Panel">
+            <div class="layoutContainer layout-grid-container">
+            </div>
+
+            <div class="layoutContainer layout-maximize-container" style="display: none;">
+                <div class="viewList"></div>
+                <div class="currentView"></div>
+            </div>
+        </div>
+        <!-- AVE布局控件内容 结束 -->
+
+        <!--网格单元格内部视图模板-->
+        <div class="layout-item-template">
+            <div class="layout-item-header">
+                <div class="layout-item-name"></div>
+
+                <div class="layout-item-buttons">
+                    <button class="layout-item-button-snap"><img src="images/max-button-background.png"/></button>
+                </div>
+            </div>
+            <div class="layout-item-container"></div>
+        </div>
+
+        <!--网格单元格总分层叠式视图模板-->
+        <div class="layout-backgrounditem-template" style="display: none;">
+            <div class="layout-backgrounditem-header">
+                <div class="layout-backgrounditem-name"></div>
+
+                <div class="layout-backgrounditem-buttons">
+                    <button class="layout-backgrounditem-button-close">Close</button>
+                    <button class="layout-backgrounditem-button-snap">Maximize</button>
+                </div>
+            </div>
+            <div class="layout-backgrounditem-container"></div>
+        </div>
+
+        <!--snap视图中最小化模板-->
+        <div class="snap-miniview-template">
+            <div class="snap-miniview-name"></div>
+            <div class="snap-miniview-buttons">
+                <button class="snap-miniview-button-exchange"><img src="images/exchange-icon.png"/></button>
+            </div>
+        </div>
+
+        <!--snap视图当前实现view的模板-->
+        <div class="snap-curview-template">
+            <div class="snap-curview-header">
+                <div class="snap-curview-name"></div>
+
+                <div class="snap-curview-buttons">
+                    <button class="snap-curview-button-close" style="display: none;">Close</button>
+                    <button class="snap-curview-button-resize"><img src="images/max-icon.png"/></button>
+                    <button class="snap-curview-button-config" style="display: none;">Config</button>
+                </div>
+            </div>
+            <div class="snap-curview-container"></div>
+        </div>
+
+    </div>
+</div>
+
+<footer data-options="region:'south', height: '25'" class="containerLayout">
+    <div data-options="region:'west', width: '50%', min-width: 100">
+        <div class="themeContainerWrap">
+            <div class="themeContainerSubwrap">
+                <div class="themeContainerContent">
+                    <div id="themeFooterLeft">系统提示信息：动态操作提示信息</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'east', width: '50%', min-width: 100">
+        <div class="themeContainerWrap">
+            <div class="themeContainerSubwrap">
+                <div class="themeContainerContent">
+                    <div id="themeFooterRight">
+                        产品归属单位信息
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

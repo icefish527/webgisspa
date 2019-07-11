@@ -1,0 +1,139 @@
+/* Grid 样式 */
+.km-view {
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: -moz-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    -webkit-align-content: stretch;
+    align-content: stretch;
+    vertical-align: top;
+}
+
+.k-grid {
+    height: 100%;
+    position: relative;
+}
+
+.k-grid table {
+    width: 100%;
+    margin: 0;
+    max-width: none;
+    border-collapse: separate;
+    border-spacing: 0;
+    empty-cells: show;
+    border-width: 0;
+    outline: 0;
+    overflow: hidden;
+}
+
+.k-grid-content {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: scroll;
+    height: calc(100% - 30px);
+}
+
+.k-grid-header table, .k-grid-content table, .k-grid-footer table, .k-grid-content-locked > table {
+    table-layout: fixed;
+}
+
+div.k-grid-header, div.k-grid-footer {
+    padding-right: 17px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: transparent;
+    zoom: 1;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: transparent;
+}
+
+.k-grid-header th.k-header, .k-filter-row th {
+    overflow: hidden;
+    border-style: solid;
+    border-width: 0 0 0px 0px;
+    border-color: transparent;
+    font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.k-grid-header .k-header .k-link {
+    background: rgba(100, 192, 223, 0.6);
+    font-size: 14px;
+    color: #ffffff;
+    font-family: "微软雅黑";
+    text-align: center;
+    padding: 10px;
+    display: block;
+    min-height: 18px;
+    height: 20px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none
+}
+
+.k-grid-header th.k-header .k-icon {
+    visibility: hidden;
+}
+
+.k-header .k-grid-filter, .k-header .k-header-column-menu {
+    float: right;
+    padding: .5em .2em .4em;
+    position: relative;
+    z-index: 1;
+}
+.k-grid td {
+    background: rgba(125,125,125,0.2);
+    color: rgba(255, 255, 255, 1);
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(153, 153, 153, 1)), color-stop(100%, rgba(153, 153, 0, 0.1)));*/
+    /*background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);*/
+    /*background: -o-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);*/
+    /*background: -ms-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);*/
+    /*background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);*/
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: small;
+    font-family: "微软雅黑";
+    text-align: center;
+}
+
+.k-grid .k-alt td {
+    background-color: rgba(204, 204, 204, 0.2);
+    /*background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%);*/
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.2)), color-stop(100%, rgba(0, 0, 0, 0.1)));*/
+    /*background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);*/
+    /*background: -o-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);*/
+    /*background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);*/
+    /*background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);*/
+}
+
+.k-grid tr {
+    height: 20px;
+    max-height: 20px;
+}
+
+.k-grid .k-state-selected{
+    background-color: red;
+}

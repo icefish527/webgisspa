@@ -1,0 +1,58 @@
+<div id="grid"
+     style="height:calc(100% - 10px);padding-top: 5px;"
+     ng-controller="sousuoController">
+    <div style="height: 29px;margin-bottom: 5px; ">
+        <input id="sousuoInput" type="text" ng-model="keyWord">
+        <button id="sousuoButton" ng-click="search()">查询</button>
+    </div>
+    <div id="SearchResult"
+         kendo-grid
+         k-options="Options">
+    </div>
+  <!--  <div kendo-list-view="kendolistview"
+         id="listView"
+         style="margin-top: 10px; height:calc(100% - 40px);overflow-y: scroll;"
+         k-data-source="source"
+         k-selectable="'single'"
+         k-on-change="onListViewChanged(kendoEvent,dataItem)">
+        <div k-template>
+            <span style="margin-left: 5px;float: left;">{{ dataItem.Person }}</span>
+            <span>{{ dataItem.DateTime }}</span>
+            <span>{{ dataItem.State }}</span>
+        </div>
+    </div>-->
+</div>
+<style>
+    #sousuoInput{
+        background:rgba(204, 204, 204, 0.3) url('images/searchIcon.png') no-repeat 1% 50%;
+        width: 70%;
+        height:29px;
+        float: left;
+        border: none;
+        padding: 0 0 0 5px;
+        margin-left: 5px;
+        text-align: left;
+        color: white;
+        outline: medium;
+    }
+    #sousuoInput:focus{
+        background-image: none;
+    }
+    #sousuoButton{
+        float:right;
+        width:65px;
+        height:29px;
+        display:block;
+        background: -webkit-gradient(linear,center top,center bottom,from(#004a6F),to(#66CCFF));
+        box-shadow:0px 1px 2px #66CCFF inset;
+        text-align:center;
+        line-height:29px;
+        border: none;
+        outline: medium;
+        cursor: pointer;
+    }
+
+    #SearchResult .k-grid-header{
+        display: none;
+    }
+</style>
