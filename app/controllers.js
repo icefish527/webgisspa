@@ -661,7 +661,8 @@ define(['app', 'avelayout', 'layoutCache',
                     screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TableViews/SouSuo.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[0].setName('搜索');
 
-                    Selected23DMap();
+                    //Selected23DMap();
+                    screen1LayoutApp.dataContexts[1].setView(AVELayout.LayoutViewType.url, "views/mapView3D.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[1].setName('底图');
 
 
@@ -669,8 +670,8 @@ define(['app', 'avelayout', 'layoutCache',
                     screen1LayoutApp.dataContexts[2].setName('在线人数统计');
 
                     //screen1LayoutApp.dataContexts[3].setView(AVELayout.LayoutViewType.url, "views/TestKendoGrid.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[3].setView(AVELayout.LayoutViewType.url, "views/TableViews/KuaiSuDaoHang.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[3].setName('快速导航');
+                    screen1LayoutApp.dataContexts[3].setView(AVELayout.LayoutViewType.url, "views/TableViews/QuYuTongJi.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[3].setName('区域统计');
 
                     //screen1LayoutApp.dataContexts[4].setView(AVELayout.LayoutViewType.url, "views/barChart.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[4].setView(AVELayout.LayoutViewType.url, "views/TableViews/ShiJingTuPianZhanShi.html", $scope, $compile);

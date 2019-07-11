@@ -1,0 +1,97 @@
+<div style="height:100%;padding: 5px;" ng-controller="QuYuTongJiController">
+    <div style="height:50%">
+    <div style="height: 100%;width: 50%;float: left">
+        <div id="bendiChart" style="height: 100%;width: 100%;"></div>
+        <div style="text-align:center;position: absolute;">
+            本地总量
+        </div>
+    </div>
+        <div id="bendNumCount" style="width: 50%;float: right;height: 100%;">
+            <div style="height: 50%">
+                <div style="height: 100%;width: 10px;float: left">
+                    tupian
+                </div>
+                <div style="width: auto;float: right;">
+                    <div>
+                        <span>正常数量(辆)</span>
+                    </div>
+                    <div>
+                        <span>{{bendizhengchangNum}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50%">
+                <div style="height: 100%;width: 10px;float: left">
+                    tupian
+                </div>
+                <div style="width: auto;float: right;">
+                    <div>
+                        <span>异常数量(辆)</span>
+                    </div>
+                    <div>
+                        <span>{{bendiyichangNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height:50%">
+        <div id="yidiChart" style="height: 100%;width: 50%;float: left"></div>
+        <div id="yidiNumCount" style="width: 50%;float: right;height: 100%;">
+            <div style="height: 50%">
+                <div style="height: 100%;width: 10px;float: left">
+                    tupian
+                </div>
+                <div style="width: auto;float: right;">
+                    <div>
+                        <span>正常数量(辆)</span>
+                    </div>
+                    <div>
+                        <span>{{yidizhengchangNum}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50%">
+                <div style="height: 100%;width: 10px;float: left">
+                    tupian
+                </div>
+                <div style="width: auto;float: right;">
+                    <div>
+                        <span>异常数量(辆)</span>
+                    </div>
+                    <div>
+                        <span>{{yidiyichangNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<style>
+    #NumCount ol li {
+        list-style: none;
+        height: 55px;
+        margin-left: -20px;
+    }
+
+    #NumCount ol li .circleclass {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        float: left;
+        margin: 6px;
+    }
+
+    #NumCount ol li .name {
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+        color: #cccccc;
+    }
+
+    #NumCount ol li .value {
+        font-family: "Microsoft YaHei";
+        font-size: 24px;
+        text-align: left;
+    }
+</style>

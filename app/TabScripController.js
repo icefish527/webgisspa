@@ -91,9 +91,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
                 schema: {
                     model: {
                         fields: {
-                            Person: {type: "string"},
-                            State: {type: "string"},
-                            DateTime: {type: "string"},
+                            Person: { type: "string" },
+                            State: { type: "string" },
+                            DateTime: { type: "string" },
                         }
                     }
                 }
@@ -103,9 +103,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
             filterable: false,
             pageable: false,
             columns: [
-                {field: "Person", title: "人员", width: 25},
-                {field: "State", title: "上下线状态", width: 35},
-                {field: "DateTime", title: "上下线时间", width: 40},
+                { field: "Person", title: "人员", width: 25 },
+                { field: "State", title: "上下线状态", width: 35 },
+                { field: "DateTime", title: "上下线时间", width: 40 },
             ]
         });
         $scope.onListViewChanged = function (kendoEvent, dataItem) {
@@ -189,9 +189,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
                 schema: {
                     model: {
                         fields: {
-                            callPerson: {type: "string"},
-                            callDescription: {type: "string"},
-                            callDateTime: {type: "string"},
+                            callPerson: { type: "string" },
+                            callDescription: { type: "string" },
+                            callDateTime: { type: "string" },
                         }
                     }
                 }
@@ -203,9 +203,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
             selectable: "simple row", // "multiple cell"
             change: onChange,
             columns: [
-                {field: "callPerson", title: "呼叫人", width: 25},
-                {field: "callDescription", title: "描述", width: 35},
-                {field: "callDateTime", title: "呼叫时间", width: 40},
+                { field: "callPerson", title: "呼叫人", width: 25 },
+                { field: "callDescription", title: "描述", width: 35 },
+                { field: "callDateTime", title: "呼叫时间", width: 40 },
             ]
         });
         $scope.Click = function (event) {
@@ -300,9 +300,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
                 schema: {
                     model: {
                         fields: {
-                            Person: {type: "string"},
-                            State: {type: "string"},
-                            DateTime: {type: "string"},
+                            Person: { type: "string" },
+                            State: { type: "string" },
+                            DateTime: { type: "string" },
                         }
                     }
                 }
@@ -314,9 +314,9 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
             selectable: "simple row", // "multiple cell"
             change: onChange,
             columns: [
-                {field: "Person", title: "人员", width: 25},
-                {field: "State", title: "上下线状态", width: 35},
-                {field: "DateTime", title: "上下线时间", width: 40},
+                { field: "Person", title: "人员", width: 25 },
+                { field: "State", title: "上下线状态", width: 35 },
+                { field: "DateTime", title: "上下线时间", width: 40 },
             ]
         });
     }]);
@@ -353,8 +353,8 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
                         type: 'pie',
                         radius: ['30%', '40%'],
                         data: [
-                            {value: 1637, name: '上线人数'},
-                            {value: 726, name: '下线人数'}
+                            { value: 1637, name: '上线人数' },
+                            { value: 726, name: '下线人数' }
                         ]
                     }
                 ]
@@ -454,5 +454,74 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
         $scope.onListViewChanged = function (kendoEvent, dataItem) {
             alert(dataItem.venueId + ' : ' + dataItem.venueName);
         }
+    }]);
+
+
+    //区域统计控制器
+    appModule.controller("QuYuTongJiController", ['$scope', function ($scope) {
+        //todo:这里调接口
+        var bendizongliang = 10000;
+        var bendizhengchang = 9000;
+        var bendiyichang = 500;
+        var yidizongliang = 10000;
+        var yidizhengchang = 9000;
+        var yidiyichang = 500;
+        $scope.bendizongliangNum = bendizongliang;
+        $scope.bendizhengchangNum = bendizhengchang;
+        $scope.bendiyichangNum = bendiyichang;
+        $scope.yidizongliangNum = yidizongliang;
+        $scope.yidizhengchangNum = yidizhengchang;
+        $scope.yidiyichangNum = yidiyichang;
+        require(['echarts', 'echarts/theme/macarons', 'echarts/chart/pie'], function (ec, theme) {
+            var myChart = ec.init(document.getElementById('bendiChart'));
+
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{b}:<br/> {c} ({d}%)",
+                    textStyle: {
+                        'fontsize': 12,
+                    }
+                },
+                series: [
+                    {
+                        name: '本地总量',
+                        type: 'pie',
+                        radius: ['80%', '90%'],
+                        data: [
+                            { value: bendizhengchang, name: '本地正常' },
+                            { value: bendiyichang, name: '本地异常' }
+                        ],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                position: 'center',
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            myChart.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart.resize();
+            }, 1000);
+        });
     }]);
 });
