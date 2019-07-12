@@ -460,12 +460,12 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
     //区域统计控制器
     appModule.controller("QuYuTongJiController", ['$scope', function ($scope) {
         //todo:这里调接口
-        var bendizongliang = 10000;
-        var bendizhengchang = 9000;
-        var bendiyichang = 500;
-        var yidizongliang = 10000;
-        var yidizhengchang = 9000;
-        var yidiyichang = 500;
+        var bendizongliang = testchartdata.quyutongji.bendizongliang;
+        var bendizhengchang = testchartdata.quyutongji.bendizhengchang;
+        var bendiyichang = testchartdata.quyutongji.bendiyichang;
+        var yidizongliang = testchartdata.quyutongji.yidizongliang;
+        var yidizhengchang = testchartdata.quyutongji.yidizhengchang;
+        var yidiyichang = testchartdata.quyutongji.yidiyichang;
         $scope.bendizongliangNum = bendizongliang;
         $scope.bendizhengchangNum = bendizhengchang;
         $scope.bendiyichangNum = bendiyichang;
@@ -499,6 +499,13 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                                 },
                                 labelLine: {
                                     show: false
+                                },
+                                color: function (params) {
+                                    //自定义颜色
+                                    var colorList = [
+                                        'green', 'red'
+                                    ];
+                                    return colorList[params.dataIndex]
                                 }
                             }
                         },
@@ -522,6 +529,67 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
             timeTicket = setInterval(function () {
                 myChart.resize();
             }, 1000);
+
+            //异地图表
+            var myChart2 = ec.init(document.getElementById('yidiChart'));
+
+            var option2 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{b}:<br/> {c} ({d}%)",
+                    textStyle: {
+                        'fontsize': 12,
+                    }
+                },
+                series: [
+                    {
+                        name: '异地总量',
+                        type: 'pie',
+                        radius: ['80%', '90%'],
+                        data: [
+                            { value: yidizhengchang, name: '异地正常' },
+                            { value: yidiyichang, name: '异地异常' }
+                        ],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                color: function (params) {
+                                    //自定义颜色
+                                    var colorList = [
+                                        'green', 'red'
+                                    ];
+                                    return colorList[params.dataIndex]
+                                }
+                            }
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                position: 'center',
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            // 为echarts对象加载数据
+            myChart2.setOption(option2);
+            myChart2.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart2.resize();
+            }, 1000);
+
+
+
         });
     }]);
 
@@ -577,7 +645,7 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 ],
                 series: [
                     {
-                        name: '成交',
+                        name: '车辆数',
                         type: 'line',
                         smooth: true,
                         itemStyle: {
