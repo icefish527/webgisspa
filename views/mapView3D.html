@@ -18,7 +18,7 @@
                     <td style="width: 100px">编号</td>
                 </tr>
                 <tr style="height: 30px">
-                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">张三</td>
+                    <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">  {{MenuUserName}}</td>
                     <td style="font-size: 20px;font-family: 'Segoe UI';letter-spacing:2px;color:#66ccff;">
                         {{MenuUserId}}
                     </td>
@@ -200,7 +200,7 @@
         AllLayersDic['路况图层'] = {};
         AllLayersDic['检测区域'] = {};
         // 默认东半球的rectangle，用于viewHome时自动定位到东半球
-        var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(115.1, 20.0, 125.10001, 35.00001);
+        var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(114, 36, 114.6, 38);
         var viewHome = function () {
 
 
@@ -683,9 +683,10 @@
 
             // 设置更新周期
             SetMenuPosion(e.position);
-            MyInterval= setInterval(function () {
-                RefreshDongHua(entity);
-            }, 300);
+
+             // MyInterval= setInterval(function () {
+             //   RefreshDongHua(entity);
+             // }, 300);
 
         }
         var   MyInterval;

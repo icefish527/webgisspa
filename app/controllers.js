@@ -2086,6 +2086,9 @@ define(['app', 'avelayout', 'layoutCache',
             pubsub.subscribe('MenuManagerSelectedItem3D', function (entity) {
 
                 $scope.MenuUserId=   entity.id;
+                $scope.MenuUserName='张璐';
+
+
             });
 
         });
