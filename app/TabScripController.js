@@ -1,7 +1,7 @@
 /**
  * Created by SYS on 2016/4/26.
  */
-define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
+define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, testchartdata) {
     var resultInfos = [
         {
             Person: "张三",
@@ -529,47 +529,66 @@ define(['app', 'pubsub', 'pictureSlider'], function (appModule, pubsub) {
     //车辆检测控制器
     appModule.controller("CheLiangJianCeController", ['$scope', function ($scope) {
         //todo:这里调接口
-        var bendizongliang = 10000;
+        var cheliangjianceData = testchartdata.cheliangjiancepaihang;
         require(['echarts', 'echarts/theme/macarons', 'echarts/chart/line'], function (ec, theme) {
             var myChart = ec.init(document.getElementById('cheliangjianceChart'));
 
             var option = {
-                tooltip : {
+                tooltip: {
                     trigger: 'axis'
                 },
-                calculable : true,
-                xAxis : [
+                calculable: true,
+                grid: {
+                    borderWidth: 0
+                },
+                xAxis: [
                     {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : ['周一','周二','周三','周四','周五','周六','周日'],
-                        axisLabel:{
-                            textStyle:{
+                        type: 'category',
+                        boundaryGap: false,
+                        data: cheliangjianceData.name,
+                        axisLabel: {
+                            textStyle: {
                                 color: "white"
                             }
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
                         }
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
-                        axisLabel:{
-                            textStyle:{
+                        type: 'value',
+                        axisLabel: {
+                            textStyle: {
                                 color: "white"
                             }
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
                         }
                     }
                 ],
-                series : [
+                series: [
                     {
-                        name:'成交',
-                        type:'line',
-                        smooth:true,
+                        name: '成交',
+                        type: 'line',
+                        smooth: true,
                         itemStyle: {
                             normal: {
                                 areaStyle: {
-                                    type: 'default'}}},
-                        data:[10, 12, 21, 54, 260, 830, 710]
+                                    type: 'default',
+                                    color: 'green'
+                                }
+                            }
+                        },
+                        data: cheliangjianceData.value,
                     }
                 ]
             };
