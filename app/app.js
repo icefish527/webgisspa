@@ -1,6 +1,6 @@
 'use strict';
 
-define(['FlatsunToTruesun', 'angular', 'kendo', 'jquery'], function (flattotrue, angular, kendo,$) {
+define(['FlatsunToTruesun', 'angular', 'kendo', 'jquery'], function (flattotrue, angular, kendo, $) {
 
 
     /**
@@ -20,7 +20,7 @@ define(['FlatsunToTruesun', 'angular', 'kendo', 'jquery'], function (flattotrue,
     appModule.controller('headerController', ['$scope', function ($scope) {
 
 
-        $scope.sysName = '某某SPA演示系统';
+        $scope.sysName = '河北省汽车尾气监测系统';
 
         // 定义时钟对象
         $scope.clock = {
@@ -90,18 +90,22 @@ define(['FlatsunToTruesun', 'angular', 'kendo', 'jquery'], function (flattotrue,
 
             $scope.clock.currentDate = date;
 
+            var week = ['日', '一', '二', '三', '四', '五', '六'];
+            var weekNum = now.getDay();
+            $scope.clock.currentWeek ='星 期 '+ week[weekNum];
+
             // 计算天文时间
-    /*        var astronomy = new Date(now);
-            var tDay = date.substr(5, 5);
-            var delta = flattotrue[tDay];
-            var deltaMinutes = delta.minutes;
-            var deltaSeconds = delta.seconds;
-            astronomy.setSeconds(astronomy.getSeconds() + deltaSeconds);
-            astronomy.setMinutes(astronomy.getMinutes() + deltaMinutes);
-            // 拼接天文时间
-            var astronomyString = getDateString(astronomy);
-            $scope.clock.astronomyDate = astronomyString.substr(0, 10);
-            $scope.clock.astronomyTime = astronomyString.substr(11, 8);*/
+            /*        var astronomy = new Date(now);
+                    var tDay = date.substr(5, 5);
+                    var delta = flattotrue[tDay];
+                    var deltaMinutes = delta.minutes;
+                    var deltaSeconds = delta.seconds;
+                    astronomy.setSeconds(astronomy.getSeconds() + deltaSeconds);
+                    astronomy.setMinutes(astronomy.getMinutes() + deltaMinutes);
+                    // 拼接天文时间
+                    var astronomyString = getDateString(astronomy);
+                    $scope.clock.astronomyDate = astronomyString.substr(0, 10);
+                    $scope.clock.astronomyTime = astronomyString.substr(11, 8);*/
         };
 
         // 设置更新周期
