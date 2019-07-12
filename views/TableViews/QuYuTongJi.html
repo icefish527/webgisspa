@@ -1,9 +1,10 @@
 <div style="height:100%;padding: 5px;" ng-controller="QuYuTongJiController">
-    <div style="height:50%">
+    <div style="height:48%">
     <div style="height: 100%;width: 50%;float: left">
         <div id="bendiChart" style="height: 100%;width: 100%;"></div>
-        <div style="text-align:center;position: absolute;">
-            本地总量
+        <div style="position: absolute;top:70px;left:70px">
+            <p>本地总量</p>
+            <p style="text-align: center;margin-top:5px;">{{bendizongliangNum}}</p>
         </div>
     </div>
         <div id="bendNumCount" style="width: 50%;float: right;height: 100%;">
@@ -35,8 +36,12 @@
             </div>
         </div>
     </div>
-    <div style="height:50%">
+    <div style="height:48%">
         <div id="yidiChart" style="height: 100%;width: 50%;float: left"></div>
+        <div style="position: absolute;top:170px;left:70px">
+            <p>异地总量</p>
+            <p style="text-align: center;margin-top:5px;">{{yidizongliangNum}}</p>
+        </div>
         <div id="yidiNumCount" style="width: 50%;float: right;height: 100%;">
             <div style="height: 50%">
                 <div style="height: 100%;width: 10px;float: left">
