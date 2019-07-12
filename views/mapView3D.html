@@ -66,7 +66,7 @@
     </button>
 
 
-    <button id="btn2DChangeButton">
+    <button id="btn2DChangeButton" style="display: none">
         <img class="img23DButton"
              src="images/MapFlog3D.png" style="width: 70px;height: 35px; border-radius: 10%;">
     </button>
@@ -616,20 +616,13 @@
             ClearEntity();
             for (var i = 0; i < checkedNodes.length; i++) {
                 var item = checkedNodes[i];
-                if (item == '主要人员标注图层') {
-                    //  queryZhuYaoRenYuanAddToMap();
-                } else if (item == '主要人员历史轨迹图层') {
-                    //queryZhuYaoRenYuanLiShiGuiJiAddToMap();
-                } else if (item == '场馆区域标注图层') {
-                    // ZhuYaoChangGuanQuYuAddToMap();
-                } else if (item == '非主要人员图层') {
-                    // queryFeiZhuYaoRenYuanAddToMap();
-                }else if(item=='监测站图层')
-                {
+                if (item == '监测站图层') {
                     queryJianCeZhanAddToMap();
+                } else if (item == '路况图层') {
+                    queryRoadLineAddToMap();
+                } else if (item == '检测区域') {
+                    queryPolygonAddToMap();
                 }
-
-
             }
 
         });

@@ -2013,13 +2013,14 @@ define(['app', 'avelayout', 'layoutCache',
         appModule.controller("MapManager2DControl", function($scope){
 
             $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                { text: "主要人员图层",expanded: true,checked:true,items: [
+                /*{ text: "主要人员图层",expanded: true,checked:true,items: [
                     { text: "主要人员标注图层",checked:true },
                     { text: "主要人员历史轨迹图层",checked:true },
 
-                ] },
-                { text: "场馆区域标注图层",checked:true},
-                { text: "非主要人员图层",checked:true},
+                ] },*/
+                    { text: "监测站图层",checked:true},
+                { text: "路况图层",checked:true},
+                { text: "检测区域",checked:true},
 
             ]});
 
@@ -2047,14 +2048,9 @@ define(['app', 'avelayout', 'layoutCache',
         appModule.controller("MapManager3DControl", function($scope){
 
             $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                { text: "主要人员图层",expanded: true,checked:true,items: [
-                    { text: "主要人员标注图层",checked:true },
-                    { text: "主要人员历史轨迹图层",checked:true },
-
-                ] },
-                { text: "场馆区域标注图层",checked:true},
-                { text: "非主要人员图层",checked:true},
-
+                    { text: "监测站图层",checked:true},
+                    { text: "路况图层",checked:true},
+                    { text: "检测区域",checked:true}
             ]});
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
