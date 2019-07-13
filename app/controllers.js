@@ -658,31 +658,31 @@ define(['app', 'avelayout', 'layoutCache',
                     layoutCache.application = screen1LayoutApp;
 
                    // screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TestTabStrip.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TableViews/SouSuo.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[0].setName('搜索');
+                    screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TableViews/BaoJingShuju.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[0].setName('报警数据');
 
                     //Selected23DMap();
                     screen1LayoutApp.dataContexts[1].setView(AVELayout.LayoutViewType.url, "views/mapView3D.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[1].setName('底图');
 
 
-                    screen1LayoutApp.dataContexts[2].setView(AVELayout.LayoutViewType.url, "views/TableViews/ZaiXianRenShuoTongJi.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[2].setName('在线人数统计');
+                    screen1LayoutApp.dataContexts[2].setView(AVELayout.LayoutViewType.url, "views/TableViews/OBD.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[2].setName('OBD统计');
 
                     //screen1LayoutApp.dataContexts[3].setView(AVELayout.LayoutViewType.url, "views/TestKendoGrid.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[3].setView(AVELayout.LayoutViewType.url, "views/TableViews/QuYuTongJi.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[3].setName('区域统计');
 
                     //screen1LayoutApp.dataContexts[4].setView(AVELayout.LayoutViewType.url, "views/barChart.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[4].setView(AVELayout.LayoutViewType.url, "views/TableViews/ShiJingTuPianZhanShi.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[4].setName('实景图片展示');
+                    screen1LayoutApp.dataContexts[4].setView(AVELayout.LayoutViewType.url, "views/TableViews/HeiYanChe.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[4].setName('黑烟车监测统计');
 
 
-                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TableViews/HuJiaoTiShiMianban.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[5].setName('呼叫通知提示面板');
+                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TableViews/CheLiangJianCe.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[5].setName('车辆监测排行');
 
-                    screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/TableViews/ShangXianXianMianban.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[6].setName('上下线通知提示面板 ');
+                    screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/TableViews/YaoGan.html", $scope, $compile);
+                    screen1LayoutApp.dataContexts[6].setName('遥感监测统计 ');
 
 /*                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TestGrid.html", $scope, $compile);
                     //screen1LayoutApp.dataContexts[5].setName('底部列表');
