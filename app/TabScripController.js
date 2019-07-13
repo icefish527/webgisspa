@@ -669,4 +669,130 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
             }, 1000);
         });
     }]);
+
+    //OBD控制器
+    appModule.controller("OBDController", ['$scope', function ($scope) {
+        //todo:这里调接口
+        var names = [];
+        var values = [];
+        var obdfenlei = testchartdata.obdfenlei;
+        values = obdfenlei.value;
+        names = obdfenlei.name;
+        var servicedata = [];
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = values[i];
+            servicedata[i] = obj;
+
+        }
+
+
+        require(['echarts', 'echarts/theme/macarons', 'echarts/chart/pie'], function (ec, theme) {
+            var myChart = ec.init(document.getElementById('obdChart'));
+
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{b}:<br/> {c} ({d}%)",
+                    textStyle: {
+                        'fontsize': 12,
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: names
+                },
+                series: [
+                    {
+                        name: 'OBD技术类型',
+                        type: 'pie',
+                        data: servicedata,
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                position: 'center',
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            myChart.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart.resize();
+            }, 1000);
+        });
+    }]);
+
+    //黑烟车控制器
+    appModule.controller("HeiYanCheController", ['$scope', function ($scope) {
+        //todo:这里调接口
+        var names = [];
+        var values = [];
+        var heiyanche = testchartdata.heiyanche;
+        values = heiyanche.value;
+        names = heiyanche.name;
+        var servicedata = [];
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = values[i];
+            servicedata[i] = obj;
+
+        }
+
+        require(['echarts', 'echarts/theme/macarons', 'echarts/chart/bar'], function (ec, theme) {
+            var myChart = ec.init(document.getElementById('heiyancheChart'));
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: names
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '蒸发量',
+                        type: 'bar',
+                        data: servicedata
+                    },
+                ]
+
+            };
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            myChart.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart.resize();
+            }, 1000);
+        });
+    }]);
 });
