@@ -776,22 +776,136 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 tooltip: {
                     trigger: 'axis'
                 },
+                grid: {
+                    borderWidth: 0
+                },
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['本地车','外地车']
+                    data: ['本地车', '异地车']
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: names
+                        data: names,
+                        axisLabel: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        }
                     }
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        axisLabel: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        }
                     }
                 ],
+                series: [
+                    {
+                        name: '本地车',
+                        type: 'bar',
+                        data: servicedatabd
+                    },
+                    {
+                        name: '异地车',
+                        type: 'bar',
+                        data: servicedatayd
+                    }
+                ]
+
+            };
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            myChart.setTheme(theme);
+
+            timeTicket = setInterval(function () {
+                myChart.resize();
+            }, 1000);
+        });
+    }]);
+
+
+    //遥感监测控制器
+    appModule.controller("YaoGanController", ['$scope', function ($scope) {
+        //todo:这里调接口
+        var names = [];
+        var valuesbd = [];
+        var valuesyd = [];
+        var yaogan = testchartdata.yaogan;
+        valuesbd = yaogan.valuebd;
+        valuesyd = yaogan.valueyd;
+        names = yaogan.name;
+        var servicedatabd = [];
+        var servicedatayd = [];
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = valuesbd[i];
+            servicedatabd[i] = obj;
+
+        }
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = valuesyd[i];
+            servicedatayd[i] = obj;
+
+        }
+
+        require(['echarts', 'echarts/theme/macarons', 'echarts/chart/bar'], function (ec, theme) {
+            var myChart = ec.init(document.getElementById('yaoganChart'));
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    borderWidth: 0
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: ['本地车', '异地车']
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: names,
+                        axisLabel: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        }
+                    }
+                ],
+                color:['#4ad2ff','orange'],
                 series: [
                     {
                         name: '本地车',
