@@ -597,7 +597,29 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
     //车辆检测控制器
     appModule.controller("CheLiangJianCeController", ['$scope', function ($scope) {
         //todo:这里调接口
+        var names = [];
+        var valuesbd = [];
+        var valuesyd = [];
         var cheliangjianceData = testchartdata.cheliangjiancepaihang;
+        valuesbd = cheliangjianceData.valuebd;
+        valuesyd = cheliangjianceData.valueyd;
+        names = cheliangjianceData.name;
+        var servicedatabd = [];
+        var servicedatayd = [];
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = valuesbd[i];
+            servicedatabd[i] = obj;
+
+        }
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = valuesyd[i];
+            servicedatayd[i] = obj;
+
+        }
         require(['echarts', 'echarts/theme/macarons', 'echarts/chart/line'], function (ec, theme) {
             var myChart = ec.init(document.getElementById('cheliangjianceChart'));
 
@@ -608,6 +630,15 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 calculable: true,
                 grid: {
                     borderWidth: 0
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    textStyle: {//图例文字的样式
+                        color: '#fff',
+                        fontSize: 12
+                    },
+                    data: ['本地车', '异地车'],
                 },
                 xAxis: [
                     {
@@ -645,18 +676,30 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 ],
                 series: [
                     {
-                        name: '车辆数',
+                        name: '本地车',
                         type: 'line',
                         smooth: true,
                         itemStyle: {
                             normal: {
                                 areaStyle: {
-                                    type: 'default',
-                                    color: 'green'
+                                    type: 'default'
                                 }
                             }
                         },
-                        data: cheliangjianceData.value,
+                        data: servicedatabd,
+                    },
+                    {
+                        name: '异地车',
+                        type: 'line',
+                        smooth: true,
+                        itemStyle: {
+                            normal: {
+                                areaStyle: {
+                                    type: 'default'
+                                }
+                            }
+                        },
+                        data: servicedatayd,
                     }
                 ]
             };
@@ -702,7 +745,11 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: names
+                    data: names,
+                    textStyle: {//图例文字的样式
+                        color: '#fff',
+                        fontSize: 12
+                    }
                 },
                 series: [
                     {
@@ -782,7 +829,11 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['本地车', '异地车']
+                    data: ['本地车', '异地车'],
+                    textStyle: {//图例文字的样式
+                        color: '#fff',
+                        fontSize: 12
+                    }
                 },
                 xAxis: [
                     {
@@ -876,7 +927,11 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['本地车', '异地车']
+                    data: ['本地车', '异地车'],
+                    textStyle: {//图例文字的样式
+                        color: '#fff',
+                        fontSize: 12
+                    }
                 },
                 xAxis: [
                     {
@@ -905,7 +960,7 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                         }
                     }
                 ],
-                color:['#4ad2ff','orange'],
+                color: ['#4ad2ff', 'orange'],
                 series: [
                     {
                         name: '本地车',
