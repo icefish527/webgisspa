@@ -2078,17 +2078,22 @@ define(['app', 'avelayout', 'layoutCache',
             $scope.MenuUserId='未知';
             $scope.MenuUserAge='未知';
             $scope.MenuUserPhone='未知';
-
+            $scope.MenuPointName='未知';
+            $scope.MenuDetectCount='未知';
+            $scope.MenuQualifiedCount='未知';
             pubsub.subscribe('MenuManagerSelectedItem2D', function (LastSelectedItem) {
 
                 $scope.MenuUserId=   LastSelectedItem.feature.properties.UserID;
             });
             pubsub.subscribe('MenuManagerSelectedItem3D', function (entity) {
 
-                $scope.MenuUserId=   entity.id;
-                $scope.MenuUserName='张璐';
-
-
+                $scope.MenuUserId=  entity.id;
+                $scope.MenuUserName='张三';
+                $scope.MenuPointName='检测站';
+                var count=Math.random()*1000;
+                $scope.MenuDetectCount=Math.ceil(count);
+                $scope.MenuQualifiedCount=Math.ceil(count-10);
+                $scope.MenuUserPhone='13852176395';
             });
 
         });
