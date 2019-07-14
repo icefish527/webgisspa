@@ -746,16 +746,26 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
     appModule.controller("HeiYanCheController", ['$scope', function ($scope) {
         //todo:这里调接口
         var names = [];
-        var values = [];
+        var valuesbd = [];
+        var valuesyd = [];
         var heiyanche = testchartdata.heiyanche;
-        values = heiyanche.value;
+        valuesbd = heiyanche.valuebd;
+        valuesyd = heiyanche.valueyd;
         names = heiyanche.name;
-        var servicedata = [];
+        var servicedatabd = [];
+        var servicedatayd = [];
         for (var i = 0; i < names.length; i++) {
             var obj = new Object();
             obj.name = names[i];
-            obj.value = values[i];
-            servicedata[i] = obj;
+            obj.value = valuesbd[i];
+            servicedatabd[i] = obj;
+
+        }
+        for (var i = 0; i < names.length; i++) {
+            var obj = new Object();
+            obj.name = names[i];
+            obj.value = valuesyd[i];
+            servicedatayd[i] = obj;
 
         }
 
@@ -765,6 +775,11 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
             var option = {
                 tooltip: {
                     trigger: 'axis'
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: ['本地车','外地车']
                 },
                 xAxis: [
                     {
@@ -779,10 +794,15 @@ define(['app', 'pubsub', '../data/testchartdata'], function (appModule, pubsub, 
                 ],
                 series: [
                     {
-                        name: '蒸发量',
+                        name: '本地车',
                         type: 'bar',
-                        data: servicedata
+                        data: servicedatabd
                     },
+                    {
+                        name: '异地车',
+                        type: 'bar',
+                        data: servicedatayd
+                    }
                 ]
 
             };
