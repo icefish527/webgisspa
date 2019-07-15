@@ -1,5 +1,11 @@
 define(function () {
 
+     var values=new Array();
+    $.getJSON("data/polygon.json",function (data) {
+        values=data;
+    });
+
+
     return {
         pointData:
             {
@@ -71,41 +77,11 @@ define(function () {
 
                 ]
             },
-        poloygonData:
+        polygonData:
             {
-                "value": [
-                    {
-                        "Name": "0001",
-                        "Lon": 114.566972,
-                        "Lat": 37.978427,
-                        "Alt": 0,
-                        "Type": "固定监测站"
-                    },
-                    {
-                        "Name": "0002",
-                        "Lon": 114.626575,
-                        "Lat": 37.901228,
-                        "Alt": 0,
-                        "Type": "固定监测站"
-                    }
-                    ,
-                    {
-                        "Name": "0004",
-                        "Lon": 114.124051,
-                        "Lat": 38.020158,
-                        "Alt": 0,
-                        "Type": "固定监测站"
-                    },
-                    {
-                        "Name": "0003",
-                        "Lon": 114.385495,
-                        "Lat": 38.03858,
-                        "Alt": 0,
-                        "Type": "固定监测站"
-                    }
-
-                ]
+               "value":values
             }
+
     }
 
 });

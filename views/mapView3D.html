@@ -468,7 +468,7 @@
              });
              */
 
-            var lineArray = new Array();
+          /*  var lineArray = new Array();
             var plogydata = geometryData.poloygonData;
             $.each(plogydata.value, function (infoIndex, info) {
                 lineArray.push(info["Lon"]);
@@ -480,10 +480,50 @@
                     hierarchy: Cesium.Cartesian3.fromDegreesArray(lineArray),
                     width: 2,
                     perPositionHeight: true,
-                    material: Cesium.Color.YELLOW.withAlpha(0.4)
+                    material: Cesium.Color.YELLOW.withAlpha(0.4),
+                    extrudedHeight:3000
                 }
             });
             AllLayersDic['检测区域'][1001] = area;
+          */
+            var value=geometryData.polygonData.value;
+            $.getJSON("data/polygon.json",function (data) {
+
+            var geometerys=data["geometries"];
+            $.each(geometerys,function (infoIndex,info) {
+                var coordinates=info["coordinates"];
+                var lineArray = new Array();
+                var coordinate=coordinates[0];
+                $.each(coordinate,function (infoIndex,info) {
+                    lineArray.push(info[0]);
+                    lineArray.push(info[1]);
+                });
+              var pollutionCount=Math.ceil(  Math.random()*10);
+
+                var area = Cesium3DViewer.entities.add({
+                    polygon: {
+                        hierarchy: Cesium.Cartesian3.fromDegreesArray(lineArray),
+                        width: 2,
+                        perPositionHeight: true,
+                        material: Cesium.Color.GREEN.withAlpha(0.4),
+                        extrudedHeight:1000
+                    }
+                });
+                if (pollutionCount<5)
+                {
+                    area.polygon.material=Cesium.Color.GREEN.withAlpha(0.4);
+                }else if (pollutionCount>=5&&pollutionCount<8)
+                {
+                    area.polygon.material=Cesium.Color.YELLOW.withAlpha(0.4);
+                }else if (pollutionCount>=8)
+                    {
+                        area.polygon.material=Cesium.Color.RED.withAlpha(0.4);
+                 }
+
+                AllLayersDic['检测区域'][infoIndex] = area;
+            });
+
+            });
 
         }
 
@@ -729,7 +769,7 @@
             } else {
                 $("#MenuWindow").css('margin-top', 0).css('margin-left', 10);
             }
-            $("#MenuWindow").css('display', 'block').css('left', position.x).css('top', position.y).css('width', 210).css('height', 170);
+            $("#MenuWindow").css('display', 'block').css('left', position.x).css('top', position.y).css('width', 300).css('height', 230);
         }
 
         var CloseMenuWindow = function () {
