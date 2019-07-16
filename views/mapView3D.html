@@ -306,7 +306,15 @@
             Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
                 var entity = pickEntity(Cesium3DViewer, e);
                 if (entity) {
-                    EntyClick(entity, e)
+                    $.each(AllLayersDic['监测站图层'], function (infoindex,info) {
+                        if (info.id == entity.id) {
+                            EntyClick(entity, e);
+                            
+                        }
+
+                    });
+
+
                 }
             }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
