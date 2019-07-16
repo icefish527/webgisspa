@@ -2048,14 +2048,14 @@ define(['app', 'avelayout', 'layoutCache',
         appModule.controller("MapManager3DControl", function($scope){
 
             $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                    { text: "监测站图层",checked:true},
+                    { text: "监测站图层",dataContext:'监测站',checked:true},
                     { text: "路况图层",checked:true},
                     { text: "检测区域",checked:true}
             ]});
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
                     if (nodes[i].checked) {
-                        checkedNodes.push(nodes[i].text);
+                        checkedNodes.push(nodes[i].text);//todo:这里build树的时候push dataContext，context尽量用object不要用文字，不要push标题文字
                     }
                     if (nodes[i].hasChildren) {
                         checkedNodeIds(nodes[i].children.view(), checkedNodes);
