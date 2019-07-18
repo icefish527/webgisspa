@@ -69,7 +69,7 @@
 .layout-item-header {
     display: block;
     width: 100%;
-    height: 20px;
+    height: 18px;
     /* background-color: rgba(39, 47, 51, 0.85); */
     padding: 6px 0 6px 0;
     background: -webkit-linear-gradient(left, rgba(41, 177, 255,0.9) , rgba(41, 177, 255, 0.05)); /* Safari 5.1 - 6.0 */
@@ -80,7 +80,7 @@
 
 .layout-item-container {
     display: block;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 21, 55, 0.1);
     height: calc(100% - 32px);
 }
 

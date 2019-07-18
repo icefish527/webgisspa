@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>河北省汽车尾气检测系统</title>
 
     <!-- <link rel="stylesheet" href="css/leaflet.css"/>
@@ -37,7 +37,7 @@
 
 <body class="containerLayout">
     <header data-options="region:'north', height: '60'" ng-controller="headerController" class="containerLayout"
-        background-url="images/TitleBg.png">
+        style="background:url(images/bg-title.png) no-repeat center top;background-color: rgb(6,24,57);">
         <div data-options="region:'west', width: '30%', min-width: 100, max-width: '470'">
             <div class="themeContainerWrap">
                 <div class="themeContainerSubwrap">
@@ -45,14 +45,17 @@
                         <!-- 标题左右居中 -->
                         <div style="width: auto; margin:0px auto; padding-left:20px;">
                             <div style="float:left;">
-                                <div
-                                    style="float:left;font-size: 18px;font-family: 'Segoe UI Light';letter-spacing:2px;color: #66CCFF; ">
-                                    <div>{{   clock.currentDate }}</div>
-                                    <div>{{   clock.currentWeek }}</div>
+                                <div style="float:left;margin-top: 8px;">
+                                    <div
+                                        style="font-size: 14px;font-family: 'Segoe UI Light';letter-spacing:2px;color: #b7d7fe;">
+                                        {{clock.currentDate}}</div>
+                                    <div
+                                        style="font-size: 14px;font-family: 'Segoe UI Light';letter-spacing:2px;color: #00baff;">
+                                        {{clock.currentWeek}}</div>
                                 </div>
                                 <div style="float:left; height: 49px;  margin-top: 3px; margin-left:5px;">
                                     <div
-                                        style="font-size: 40px; font-family: 'Segoe UI'; letter-spacing:1px; margin-top: -5px; color: #66CCFF;">
+                                        style="font-size: 40px; font-family: 'Segoe UI'; letter-spacing:1px; margin-top: -5px; color: #b7d7fe;">
                                         {{clock.currentTime }}
                                     </div>
                                 </div>
@@ -69,7 +72,7 @@
                         <!-- 标题左右居中 -->
                         <div id="applicationTitle">
                             <div
-                                style="font-size: 30px;letter-spacing:1px; color: #66CCFF;  margin-left: 5px; margin-top: 5px; font-family: digital_display;">
+                                style="font-size: 30px;letter-spacing:1px; color: #66CCFF;  margin-left: 5px; margin-top: 5px; font-family: digital_display;display: none;">
                                 {{ sysName }}
                                 <!-- <img src="images/SystemName.png"/> -->
                             </div>
