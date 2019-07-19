@@ -1,17 +1,18 @@
-<link rel="stylesheet" href="css/mapView3D.css"/>
+<link rel="stylesheet" href="css/mapView3D.css" />
 <div style="width: 100%; height: 100%; float: left;">
 
     <div id='map'></div>
 </div>
 
 <div id="MenuWindow"
-     style="display:none; width:300px; height:200px; z-index: 400; left: 470px;top: 400px ; position: absolute;"
-     ng-controller="MenuManagerControl">
+    style="display:none; width:300px; height:200px; z-index: 400; left: 470px;top: 400px ; position: absolute;"
+    ng-controller="MenuManagerControl">
     <div id="ContentWindow" style="width:300px; height:200px;">
-        <div style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
+        <div
+            style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
 
             <button class="menuCloseBTn" id="btnMenuClose">
-                <img src="images/close-button-image.png" style="width: 15px;width: 15px;"/>
+                <img src="images/close-button-image.png" style="width: 15px;width: 15px;" />
             </button>
             <table border="0" style="width: 100%; height: 70%;margin-top: 10px">
                 <tr style="height: 20px">
@@ -63,7 +64,7 @@
                       </td>
                       -->
                     <td style="width: 65px">
-                        <button class="MenuButton" id="btnMenuGuiJi"><img src="images/btn_RYGJ.png"/></button>
+                        <button class="MenuButton" id="btnMenuGuiJi"><img src="images/btn_RYGJ.png" /></button>
                     </td>
                 </tr>
             </table>
@@ -72,39 +73,35 @@
         <!-- <button id='LiShiBtn'>dianji</button>-->
     </div>
 </div>
-<div id="middlePositionDiv"
-     style="width: 100%; height: 100%; z-index: 400; position: absolute; pointer-events: none;">
+<div id="middlePositionDiv" style="width: 100%; height: 100%; z-index: 400; position: absolute; pointer-events: none;">
 
-    <button id="homeButton" style="border: none">
+    <button id="homeButton" title="地图复位" style="border: none">
         <img src="images/home.png" style="width: 31px;
-        height: 31px;"/>
+        height: 31px;" />
     </button>
 
 
     <button id="btn2DChangeButton" style="display: none">
-        <img class="img23DButton"
-             src="images/MapFlog3D.png" style="width: 70px;height: 35px; border-radius: 10%;">
+        <img class="img23DButton" src="images/MapFlog3D.png" style="width: 70px;height: 35px; border-radius: 10%;">
     </button>
 
 
-    <div id="mapBaseLayerView0" style=" height:calc(100% - 300px);padding: 10px;">
-        <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">图层显隐控制：</div>
-        <div kendo-tree-view="tree"
-             id="treeview"
-             k-data-source="treeData"
-             k-on-check="onChecked(this)"
-             k-checkboxes="{checkChildren: true}"
-             ng-controller="MapManager3DControl" style="margin-top: 10px">
+    <div id="mapBaseLayerView0" style="padding: 10px;">
+        <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">地图筛选控制：</div>
+        <div kendo-tree-view="tree" id="treeview" k-data-source="treeData" k-on-check="onChecked(this)"
+            k-checkboxes="{checkChildren: true}" ng-controller="MapManager3DControl" style="margin-top: 10px;height: 300px;">
             <span k-template>{{dataItem.text}}</span>
         </div>
     </div>
 
-    <button id="layerChange3D" ONCLICK="layerChanged()">
-        <img class="imgInButton"
-             src="images/layer-change-button-N.png" style="width: 30px;height: 30px; border-radius: 10%;">
+    <button id="layerChange3D" title="地图筛选" ONCLICK="layerChanged()">
+        <img class="imgInButton" src="images/layer-change-button-N.png"
+            style="width: 30px;height: 30px; border-radius: 10%;">
     </button>
-    <button id="drawerChangeButton"><img src="images/shrink-icon-Da-N.png"
-                                         style="width: 30px;height: 30px; border-radius: 10%;"/></button>
+    <button id="drawerChangeButton" title="全屏/退出全屏"><img src="images/shrink-icon-Da-N.png"
+            style="width: 30px;height: 30px; border-radius: 10%;" /></button>
+
+    <div style="position: absolute;bottom: 0px;left: 20%;"><img src="../images/pic-tuli.png" /></div>
 </div>
 <script>
     var reposition = function () {
@@ -273,7 +270,7 @@
             //var imagerylayer = new Cesium.OpenStreetMapImageryProvider({
             //     url: Config.Map3D.TiledMapURl,
             //   });
-            var arcgislayer = new Cesium.ArcGisMapServerImageryProvider({url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",});
+            var arcgislayer = new Cesium.ArcGisMapServerImageryProvider({ url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer", });
 
             Cesium3DViewer = new Cesium.Viewer('map', {
                 // 关闭所有的插件
@@ -306,10 +303,10 @@
             Cesium3DViewer.cesiumWidget.screenSpaceEventHandler.setInputAction(function (e) {
                 var entity = pickEntity(Cesium3DViewer, e);
                 if (entity) {
-                    $.each(AllLayersDic['监测站图层'], function (infoindex,info) {
+                    $.each(AllLayersDic['监测站图层'], function (infoindex, info) {
                         if (info.id == entity.id) {
                             EntyClick(entity, e);
-                            
+
                         }
 
                     });
@@ -621,7 +618,7 @@
 
         //主要人员历史轨迹
         var queryZhuYaoRenYuanLiShiGuiJiAddToMap = function () {
-            <!-- 根据时间筛选 非主要人员图层-->
+            // < !--根据时间筛选 非主要人员图层-- >
             for (var i = AllLayersDic['主要人员历史轨迹图层'].length - 1; i >= 0; i--) {
                 AllLayersDic['主要人员历史轨迹图层'].removeAt(i);
             }
@@ -632,40 +629,40 @@
                 .orderBy('UpdateTime', 'ASC')
                 .run(function (error, featureCollection) {
 
-                        var pointArr = new Array();
-                        var ss = featureCollection;
-                        for (var i = 0; i < featureCollection.features.length; i++) {
-                            /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
-                            pointArr.push(featureCollection.features[i].properties.X);
-                            pointArr.push(featureCollection.features[i].properties.Y);
-                        }
-
-                        var redLine = Cesium3DViewer.entities.add({
-                            name: 'Red line on the surface',
-                            polyline: {
-                                positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
-                                    118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
-                                width: 1,
-                                material: Cesium.Color.RED
-                            }
-                        });
-
-                        var lishiGuiJi = Cesium3DViewer.entities.add({
-                            polyline: {
-                                positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
-                                width: 2,
-                                material: Cesium.Color.RED
-                            }
-                        });
-                        AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
-
+                    var pointArr = new Array();
+                    var ss = featureCollection;
+                    for (var i = 0; i < featureCollection.features.length; i++) {
+                        /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
+                        pointArr.push(featureCollection.features[i].properties.X);
+                        pointArr.push(featureCollection.features[i].properties.Y);
                     }
+
+                    var redLine = Cesium3DViewer.entities.add({
+                        name: 'Red line on the surface',
+                        polyline: {
+                            positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
+                                118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
+                            width: 1,
+                            material: Cesium.Color.RED
+                        }
+                    });
+
+                    var lishiGuiJi = Cesium3DViewer.entities.add({
+                        polyline: {
+                            positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
+                            width: 2,
+                            material: Cesium.Color.RED
+                        }
+                    });
+                    AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
+
+                }
                 );
         };
 
         //查询非主要人员，并绘制到地图
         var queryFeiZhuYaoRenYuanAddToMap = function () {
-            <!-- 根据时间筛选 非主要人员图层-->
+            // < !--根据时间筛选 非主要人员图层-- >
             for (var i = AllLayersDic['非主要人员图层'].length - 1; i >= 0; i--) {
                 AllLayersDic['非主要人员图层'].removeAt(i);
             }
@@ -876,4 +873,3 @@
 
     });
 </script>
-
