@@ -1,71 +1,73 @@
 <div style="height:100%;padding: 5px;" ng-controller="QuYuTongJiController">
-    <div style="height:48%">
-    <div style="height: 100%;width: 50%;float: left">
-        <div id="bendiChart" style="height: 100%;width: 100%;"></div>
-        <div style="position: absolute;top:60px;left:70px">
-            <p>本地总量</p>
-            <p style="text-align: center;margin-top:5px;">{{bendizongliangNum}}</p>
+    <div style="height:40%;margin-top: 5%">
+        <div style="height: 100%;width: 50%;float: left;position: relative;">
+            <div id="bendiChart" style="height: 100%;width: 100%;"></div>
+            <div style="position: absolute;top:33%;left:33%">
+                <p>本地总量</p>
+                <p style="text-align: center;margin-top:5px;">{{bendizongliangNum}}</p>
+            </div>
         </div>
-    </div>
         <div id="bendNumCount" style="width: 50%;float: right;height: 100%;">
             <div style="height: 50%">
-                <div style="height: 100%;width: 10px;float: left">
-                    tupian
+                <div style="height: 100%;float: left">
+                    <img src="../../images/icons/icon-hege.png" />
                 </div>
-                <div style="width: auto;float: right;">
-                    <div>
+                <div style="height: 100%;width: auto;float: left;">
+                    <div style="height: 50%;">
                         <span>正常数量(辆)</span>
                     </div>
-                    <div>
-                        <span>{{bendizhengchangNum}}</span>
+                    <div style="height: 50%;">
+                        <span style="color: #00b483">{{bendizhengchangNum}}</span>
                     </div>
                 </div>
             </div>
             <div style="height: 50%">
-                <div style="height: 100%;width: 10px;float: left">
-                    tupian
+                <div style="height: 100%;float: left">
+                    <img src="../../images/icons/icon-buhege.png" />
                 </div>
-                <div style="width: auto;float: right;">
-                    <div>
+                <div style="height: 100%;width: auto;float: left;">
+                    <div style="height: 50%;">
                         <span>异常数量(辆)</span>
                     </div>
-                    <div>
-                        <span>{{bendiyichangNum}}</span>
+                    <div style="height: 50%;">
+                        <span style="color: #ea214c">{{bendiyichangNum}}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div style="height:48%">
-        <div id="yidiChart" style="height: 100%;width: 50%;float: left"></div>
-        <div style="position: absolute;top:180px;left:70px">
-            <p>异地总量</p>
-            <p style="text-align: center;margin-top:5px;">{{yidizongliangNum}}</p>
+    <div style="height:40%;margin-top: 3%">
+        <div style="height: 100%;width: 50%;float: left;position: relative;">
+            <div id="yidiChart" style="height: 100%;width: 100%;"></div>
+            <div style="position: absolute;top:33%;left:33%">
+                <p>异地总量</p>
+                <p style="text-align: center;margin-top:5px;">{{yidizongliangNum}}</p>
+            </div>
         </div>
         <div id="yidiNumCount" style="width: 50%;float: right;height: 100%;">
             <div style="height: 50%">
-                <div style="height: 100%;width: 10px;float: left">
-                    tupian
+                <div style="height: 100%;float: left">
+                    <img src="../../images/icons/icon-hege.png" />
                 </div>
-                <div style="width: auto;float: right;">
-                    <div>
+                <div style="height: 100%;width: auto;float: left;">
+                    <div style="height: 50%;">
                         <span>正常数量(辆)</span>
                     </div>
-                    <div>
-                        <span>{{yidizhengchangNum}}</span>
+                    <div style="height: 50%;">
+                        <span style="color: #00b483">{{yidizhengchangNum}}</span>
                     </div>
                 </div>
             </div>
             <div style="height: 50%">
-                <div style="height: 100%;width: 10px;float: left">
-                    tupian
+                <div style="height: 100%;float: left">
+                    <img src="../../images/icons/icon-buhege.png" />
                 </div>
-                <div style="width: auto;float: right;">
-                    <div>
+                <div style="height: 100%;width: auto;float: left;">
+                    <div style="height: 50%;">
                         <span>异常数量(辆)</span>
                     </div>
-                    <div>
-                        <span>{{yidiyichangNum}}</span>
+                    <div style="height: 50%;">
+                        <span style="color: #ea214c">{{yidiyichangNum}}</span>
                     </div>
                 </div>
             </div>
