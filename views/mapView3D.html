@@ -155,7 +155,7 @@
 </script>
 
 <script>
-    require(['app', 'layoutCache', 'pubsub', 'customScrollbar', 'jquery', '../data/GeometryData'], function (rAppModule, layoutCache, PubSub, cus, $, geometryData) {
+    require(['app', 'layoutCache', 'pubsub', 'customScrollbar', 'jquery', 'GeometryData'], function (rAppModule, layoutCache, PubSub, cus, $, geometryData) {
 
         $('#drawerChangeButton').unbind('click').bind('click', function () {
             if (window.CurrentMapWindowFlag == 0) {
@@ -331,7 +331,6 @@
                 CloseMenuWindow();
             }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
 
-
             viewHome();
         };
 
@@ -475,11 +474,11 @@
 
                     var pollutionCount = Math.ceil(Math.random() * 10);
                     if (pollutionCount < 5) {
-                        roadline.polyline.material = Cesium.Color.GREEN.withAlpha(0.4);
+                        roadline.polyline.material = Cesium.Color.GREEN.withAlpha(0.8);
                     } else if (pollutionCount >= 5 && pollutionCount < 8) {
-                        roadline.polyline.material = Cesium.Color.YELLOW.withAlpha(0.4);
+                        roadline.polyline.material = Cesium.Color.YELLOW.withAlpha(0.8);
                     } else if (pollutionCount >= 8) {
-                        roadline.polyline.material = Cesium.Color.RED.withAlpha(0.4);
+                        roadline.polyline.material = Cesium.Color.RED.withAlpha(0.8);
                     }
 
                     AllLayersDic['路况图层'][infoIndex] = roadline;
@@ -556,11 +555,11 @@
                     });
                     var pollutionCount = Math.ceil(Math.random() * 10);
                     if (pollutionCount < 5) {
-                        area.polygon.material = Cesium.Color.GREEN.withAlpha(0.4);
+                        area.polygon.material = Cesium.Color.GREEN.withAlpha(0.2);
                     } else if (pollutionCount >= 5 && pollutionCount < 8) {
-                        area.polygon.material = Cesium.Color.YELLOW.withAlpha(0.4);
+                        area.polygon.material = Cesium.Color.YELLOW.withAlpha(0.2);
                     } else if (pollutionCount >= 8) {
-                        area.polygon.material = Cesium.Color.RED.withAlpha(0.4);
+                        area.polygon.material = Cesium.Color.RED.withAlpha(0.2);
                     }
 
                     AllLayersDic['检测区域'][infoIndex] = area;

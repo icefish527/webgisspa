@@ -26,7 +26,8 @@
         // data
         'FlatsunToTruesun': '../data/FlatsunToTruesun',
         //pictureSlider
-        'pictureSlider': 'pictureSlider'
+        'pictureSlider': 'pictureSlider',
+        'GeometryData':'../data/GeometryData'
     },
     shim: {
         'angular': {

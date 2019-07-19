@@ -1,7 +1,7 @@
 define(['app', 'avelayout', 'layoutCache',
-        'models', 'kendo', 'jquery', 'pubsub',
+        'models', 'kendo', 'jquery', 'pubsub','GeometryData',
         'TabScripController', 'directives'],
-    function (appModule, avelayout, layoutCache, models, kendo, $, pubsub) {
+    function (appModule, avelayout, layoutCache, models, kendo, $, pubsub,geometryData) {
 
 
 
@@ -2047,10 +2047,17 @@ define(['app', 'avelayout', 'layoutCache',
         //treeview 控制器
         appModule.controller("MapManager3DControl", function($scope){
 
+            //通过监测站数据生成 treedata
+
+           var data= geometryData.pointData;
             $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
                     { text: "监测站图层",dataContext:'监测站',checked:true},
                     { text: "路况图层",checked:true},
                     { text: "检测区域",checked:true}
+
+
+
+
             ]});
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {

@@ -1,4 +1,4 @@
-define(function () {
+define(['jquery'],function ($) {
 
      var values=new Array();
     $.getJSON("data/polygon.json",function (data) {
