@@ -64,14 +64,60 @@
                       </td>
                       -->
                     <td style="width: 65px">
-                        <button class="MenuButton" id="btnMenuGuiJi"><img src="images/btn_RYGJ.png" /></button>
+                        <!-- <button class="MenuButton" id="btnMenuGuiJi"><img src="../images/btn_RYGJ.png" /></button> -->
+                        <span id="undo" class="k-button">视频1</span>
                     </td>
                 </tr>
             </table>
 
         </div>
         <!-- <button id='LiShiBtn'>dianji</button>-->
+        <div id="window">
+            <div class="prism-player" id="player-con"></div>
+        </div>
     </div>
+
+    <script>
+       
+    </script>
+    <style>
+        #example {
+            min-height: 500px;
+        }
+
+        #undo {
+            text-align: center;
+            position: absolute;
+            white-space: nowrap;
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        .armchair {
+            float: left;
+            margin: 30px 30px 120px 30px;
+            text-align: center;
+        }
+
+        .armchair img {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .k-window-content a {
+            color: #BBB;
+        }
+
+        .k-window-content p {
+            margin-bottom: 1em;
+        }
+
+        @media screen and (max-width: 1023px) {
+            div.k-window {
+                display: none !important;
+            }
+        }
+    </style>
 </div>
 <div id="middlePositionDiv" style="width: 100%; height: 100%; z-index: 400; position: absolute; pointer-events: none;">
 
@@ -89,7 +135,8 @@
     <div id="mapBaseLayerView0" style="padding: 10px;">
         <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">地图筛选控制：</div>
         <div kendo-tree-view="tree" id="treeview" k-data-source="treeData" k-on-check="onChecked(this)"
-            k-checkboxes="{checkChildren: true}" ng-controller="MapManager3DControl" style="margin-top: 10px;height: 300px;">
+            k-checkboxes="{checkChildren: true}" ng-controller="MapManager3DControl"
+            style="margin-top: 10px;height: 300px;">
             <span k-template>{{dataItem.text}}</span>
         </div>
     </div>

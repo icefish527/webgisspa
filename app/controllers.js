@@ -1,626 +1,626 @@
 define(['app', 'avelayout', 'layoutCache',
-        'models', 'kendo', 'jquery', 'pubsub','GeometryData',
-        'TabScripController', 'directives'],
-    function (appModule, avelayout, layoutCache, models, kendo, $, pubsub,geometryData) {
+    'models', 'kendo', 'jquery', 'pubsub', 'GeometryData',
+    'TabScripController', 'directives'],
+    function (appModule, avelayout, layoutCache, models, kendo, $, pubsub, geometryData) {
 
 
 
 
         var mapUrls = [
-               {
-                   "name": "谷歌 街道图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 19,
-                       "reuseTiles": true
-                   },
-                   "view": {
-                       "lat": 34.0,
-                       "lng": 110.00,
-                       "level": 3
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝灰（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 原色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
+            {
+                "name": "谷歌 街道图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 19,
+                    "reuseTiles": true
+                },
+                "view": {
+                    "lat": 34.0,
+                    "lng": 110.00,
+                    "level": 3
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝灰（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 原色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
 
-               {
-                   "name": "海图 10 深色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 灯光图 09 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝灰（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 原色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 深色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 灯光图 09 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝灰（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 原色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 深色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 灯光图 09 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝灰（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 原色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 深色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 灯光图 09 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 街道图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 灰黑（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏蓝（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 卫星图 10 藏青（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 灰白（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 地形图 10 蓝灰（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 原色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "海图 10 深色",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               },
-               {
-                   "name": "谷歌 灯光图 09 原色（无注记）",
-                   "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
-                   "options": {
-                       "maxZoom": 10,
-                       "reuseTiles": true
-                   }
-               }
+            {
+                "name": "海图 10 深色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 灯光图 09 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝灰（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 原色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 深色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 灯光图 09 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝灰（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 原色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 深色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 灯光图 09 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝灰（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 原色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 深色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 灯光图 09 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 街道图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleStreet10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 灰黑（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏蓝（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkBlueNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 卫星图 10 藏青（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSatellite10DarkGreenNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10NoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 灰白（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BrightGrayNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10BlueColor/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 地形图 10 蓝灰（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleSurface10DarkGrapeNoLabel/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 原色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "海图 10 深色",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/SeaMap10Color/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            },
+            {
+                "name": "谷歌 灯光图 09 原色（无注记）",
+                "url": "http://10.0.0.15:6080/arcgis/rest/services/GoogleNight10/MapServer",
+                "options": {
+                    "maxZoom": 10,
+                    "reuseTiles": true
+                }
+            }
         ];
 
 
@@ -657,7 +657,7 @@ define(['app', 'avelayout', 'layoutCache',
                     screen1LayoutApp.refreshLayout();
                     layoutCache.application = screen1LayoutApp;
 
-                   // screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TestTabStrip.html", $scope, $compile);
+                    // screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TestTabStrip.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[0].setView(AVELayout.LayoutViewType.url, "views/TableViews/BaoJingShuju.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[0].setName('报警数据');
 
@@ -684,11 +684,11 @@ define(['app', 'avelayout', 'layoutCache',
                     screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/TableViews/YaoGan.html", $scope, $compile);
                     screen1LayoutApp.dataContexts[6].setName('遥感监测统计 ');
 
-/*                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TestGrid.html", $scope, $compile);
-                    //screen1LayoutApp.dataContexts[5].setName('底部列表');
-
-                    screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/testEchart1.html", $scope, $compile);
-                    screen1LayoutApp.dataContexts[6].setName('echartController');*/
+                    /*                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TestGrid.html", $scope, $compile);
+                                        //screen1LayoutApp.dataContexts[5].setName('底部列表');
+                    
+                                        screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/testEchart1.html", $scope, $compile);
+                                        screen1LayoutApp.dataContexts[6].setName('echartController');*/
 
                     currentScreenMode = 'single';
                 }
@@ -2000,7 +2000,7 @@ define(['app', 'avelayout', 'layoutCache',
 
                     $scope.sum = products.length;
                     $scope.BTL = 100;
-                    $scope.groupData = new kendo.data.DataSource({data: products});
+                    $scope.groupData = new kendo.data.DataSource({ data: products });
                 }
 
                 groupDataSource();
@@ -2010,19 +2010,21 @@ define(['app', 'avelayout', 'layoutCache',
 
 
         //treeview 控制器
-        appModule.controller("MapManager2DControl", function($scope){
+        appModule.controller("MapManager2DControl", function ($scope) {
 
-            $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                /*{ text: "主要人员图层",expanded: true,checked:true,items: [
-                    { text: "主要人员标注图层",checked:true },
-                    { text: "主要人员历史轨迹图层",checked:true },
+            $scope.treeData = new kendo.data.HierarchicalDataSource({
+                data: [
+                    /*{ text: "主要人员图层",expanded: true,checked:true,items: [
+                        { text: "主要人员标注图层",checked:true },
+                        { text: "主要人员历史轨迹图层",checked:true },
+    
+                    ] },*/
+                    { text: "监测站图层", checked: true },
+                    { text: "路况图层", checked: true },
+                    { text: "检测区域", checked: true },
 
-                ] },*/
-                    { text: "监测站图层",checked:true},
-                { text: "路况图层",checked:true},
-                { text: "检测区域",checked:true},
-
-            ]});
+                ]
+            });
 
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
@@ -2035,7 +2037,7 @@ define(['app', 'avelayout', 'layoutCache',
                 }
             }
             //checkbox 有一个bug，第一次选中父节点，选中结果只有父节点一个，没有连着子节点一起选中
-            $scope.onChecked = function(kendothis) {
+            $scope.onChecked = function (kendothis) {
                 var checkedNodes = [],
                     treeView = kendothis.tree,
                     message;
@@ -2045,20 +2047,22 @@ define(['app', 'avelayout', 'layoutCache',
         });
 
         //treeview 控制器
-        appModule.controller("MapManager3DControl", function($scope){
+        appModule.controller("MapManager3DControl", function ($scope) {
 
             //通过监测站数据生成 treedata
 
-           var data= geometryData.pointData;
-            $scope.treeData = new kendo.data.HierarchicalDataSource({ data: [
-                    { text: "监测站图层",dataContext:'监测站',checked:true},
-                    { text: "路况图层",checked:true},
-                    { text: "检测区域",checked:true}
+            var data = geometryData.pointData;
+            $scope.treeData = new kendo.data.HierarchicalDataSource({
+                data: [
+                    { text: "监测站图层", dataContext: '监测站', checked: true },
+                    { text: "路况图层", checked: true },
+                    { text: "检测区域", checked: true }
 
 
 
 
-            ]});
+                ]
+            });
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
                     if (nodes[i].checked) {
@@ -2070,7 +2074,7 @@ define(['app', 'avelayout', 'layoutCache',
                 }
             }
             //checkbox 有一个bug，第一次选中父节点，选中结果只有父节点一个，没有连着子节点一起选中
-            $scope.onChecked = function(kendothis) {
+            $scope.onChecked = function (kendothis) {
                 var checkedNodes = [],
                     treeView = kendothis.tree,
                     message;
@@ -2080,31 +2084,77 @@ define(['app', 'avelayout', 'layoutCache',
         });
 
 
-        appModule.controller("MenuManagerControl", function($scope){
-            $scope.MenuUserName='未知';
-            $scope.MenuUserId='未知';
-            $scope.MenuUserAge='未知';
-            $scope.MenuUserPhone='未知';
-            $scope.MenuPointName='未知';
-            $scope.MenuDetectCount='未知';
-            $scope.MenuQualifiedCount='未知';
+        appModule.controller("MenuManagerControl", function ($scope,$rootScope) {
+            $scope.MenuUserName = '未知';
+            $scope.MenuUserId = '未知';
+            $scope.MenuUserAge = '未知';
+            $scope.MenuUserPhone = '未知';
+            $scope.MenuPointName = '未知';
+            $scope.MenuDetectCount = '未知';
+            $scope.MenuQualifiedCount = '未知';
             pubsub.subscribe('MenuManagerSelectedItem2D', function (LastSelectedItem) {
 
-                $scope.MenuUserId=   LastSelectedItem.feature.properties.UserID;
+                $scope.MenuUserId = LastSelectedItem.feature.properties.UserID;
             });
             pubsub.subscribe('MenuManagerSelectedItem3D', function (entity) {
 
-                $scope.MenuUserId=  entity.id;
-                $scope.MenuUserName='张三';
-                $scope.MenuPointName='检测站';
-                var count=Math.random()*1000;
-                $scope.MenuDetectCount=Math.ceil(count);
-                $scope.MenuQualifiedCount=Math.ceil(count-10);
-                $scope.MenuUserPhone='13852176395';
+                $scope.MenuUserId = entity.id;
+                $scope.MenuUserName = '张三';
+                $scope.MenuPointName = '检测站';
+                var count = Math.random() * 1000;
+                $scope.MenuDetectCount = Math.ceil(count);
+                $scope.MenuQualifiedCount = Math.ceil(count - 10);
+                $scope.MenuUserPhone = '13852176395';
             });
 
-        });
+            require(['kendo', 'jquery'], function (k, $) {
+                var onClose = function () {
+                    player.pause();
+                };
+                var onOpen = function () {
+                    player.play();
+                };
+                if ($rootScope.player == null) {
+                    var player = new Aliplayer({
+                        "id": "player-con",
+                        "source": "//player.alicdn.com/video/aliyunmedia.mp4",
+                        "width": "640px",
+                        "height": "480px",
+                        "autoplay": false,
+                        "isLive": true,
+                        "rePlay": false,
+                        "playsinline": true,
+                        "preload": true,
+                        "controlBarVisibility": "hover",
+                        "useH5Prism": true
+                    }, function (player) {
+                        console.log("The player is created");
+                    }
+                    );
+                    $rootScope.player = player;
+                }
+                var $window = null;
+                var create = function (title) {
+                    var kWindow = $('#window');
+                    kWindow.kendoWindow({
+                        actions: ["Close"],
+                        pinned: false,
+                        resizable: false,
+                        title: title,
+                        modal: true,
+                        open: onOpen,
+                        close: onClose,
+                        visible: false,
+                    });
+                    $window = kWindow.parent();
+                };
+                create();
+                $('#undo').click(function () {
+                    $('#window').data("kendoWindow").center().open();
+                });
 
+            });
+        });
 
         appModule.controller('mapBaseLayerListView2DController', ['$scope', function ($scope) {
 
