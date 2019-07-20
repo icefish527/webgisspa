@@ -259,7 +259,7 @@
         AllLayersDic['路况图层'] = {};
         AllLayersDic['检测区域'] = {};
         // 默认东半球的rectangle，用于viewHome时自动定位到东半球
-        var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(114, 36, 114.6, 38);
+        var DEFAULT_EASTERN_RECTANGLE = Cesium.Rectangle.fromDegrees(114.02682770703123,38.21492827376737 , 114.82608307812498, 37.85365453848766);
         var viewHome = function () {
 
 
@@ -286,9 +286,14 @@
                 Cesium.Cartesian3.multiplyByScalar(destination, mag, destination);
 
                 scene.camera.flyTo({
-                    destination: destination,
+                    destination :  Cesium.Cartesian3.fromDegrees(114.48825348828123,35.61906874987727, 150000.0), // 设置位置
                     duration: duration,
-                    endTransform: Cesium.Matrix4.IDENTITY
+                    //endTransform: Cesium.Matrix4.IDENTITY
+                    orientation: {
+                        heading : Cesium.Math.toRadians(0.0), // 方向
+                        pitch : Cesium.Math.toRadians(-35.0),// 倾斜角度
+                        roll : 0
+                    }
                 });
             } else if (mode === Cesium.SceneMode.COLUMBUS_VIEW) {
                 var maxRadii = scene.globe.ellipsoid.maximumRadius;
