@@ -1,18 +1,18 @@
-<link rel="stylesheet" href="css/mapView3D.css" />
+<link rel="stylesheet" href="css/mapView3D.css"/>
 <div style="width: 100%; height: 100%; float: left;">
 
     <div id='map'></div>
 </div>
 
 <div id="MenuWindow"
-    style="display:none; width:300px; height:200px; z-index: 400; left: 470px;top: 400px ; position: absolute;"
-    ng-controller="MenuManagerControl">
+     style="display:none; width:300px; height:200px; z-index: 400; left: 470px;top: 400px ; position: absolute;"
+     ng-controller="MenuManagerControl">
     <div id="ContentWindow" style="width:300px; height:200px;">
         <div
-            style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
+                style="font-size: 14px;font-family: 'Segoe UI';letter-spacing:2px;color: #FFFFFF;margin-top: 8px;margin-left: 8px">
 
             <button class="menuCloseBTn" id="btnMenuClose">
-                <img src="images/close-button-image.png" style="width: 15px;width: 15px;" />
+                <img src="images/close-button-image.png" style="width: 15px;width: 15px;"/>
             </button>
             <table border="0" style="width: 100%; height: 70%;margin-top: 10px">
                 <tr style="height: 20px">
@@ -53,7 +53,7 @@
                 </tr>
             </table>
         </div>
-        <div style="float:left; width: 100%; height: 20%;margin-top: calc(100% - 300px); margin-left:5px;">
+        <div style="float:left; width: 100%; height: 20%;margin-top: calc(100% - 315px); margin-left:5px;">
             <table border="0">
                 <tr style="height: 20px">
                     <!--  <td style="width: 65px">
@@ -78,7 +78,7 @@
     </div>
 
     <script>
-       
+
     </script>
     <style>
         #example {
@@ -123,7 +123,7 @@
 
     <button id="homeButton" title="地图复位" style="border: none">
         <img src="images/home.png" style="width: 31px;
-        height: 31px;" />
+        height: 31px;"/>
     </button>
 
 
@@ -135,20 +135,21 @@
     <div id="mapBaseLayerView0" style="padding: 10px;">
         <div style="font-size: 20px;letter-spacing:2px; margin-left:5px;color: #CCCCCC;">地图筛选控制：</div>
         <div kendo-tree-view="tree" id="treeview" k-data-source="treeData" k-on-check="onChecked(this)"
-            k-checkboxes="{checkChildren: true}" ng-controller="MapManager3DControl"
-            style="margin-top: 10px;height: 300px;">
+             k-checkboxes="{checkChildren: true}" ng-controller="MapManager3DControl" k-expanded="true"
+             style="margin-top: 10px;height: 300px;">
             <span k-template>{{dataItem.text}}</span>
         </div>
     </div>
 
     <button id="layerChange3D" title="地图筛选" ONCLICK="layerChanged()">
         <img class="imgInButton" src="images/layer-change-button-N.png"
-            style="width: 30px;height: 30px; border-radius: 10%;">
+             style="width: 30px;height: 30px; border-radius: 10%;">
     </button>
     <button id="drawerChangeButton" title="全屏/退出全屏"><img src="images/shrink-icon-Da-N.png"
-            style="width: 30px;height: 30px; border-radius: 10%;" /></button>
+                                                         style="width: 30px;height: 30px; border-radius: 10%;"/>
+    </button>
 
-    <div style="position: absolute;bottom: 0px;left: 20%;"><img src="../images/pic-tuli.png" /></div>
+    <div style="position: absolute;bottom: 0px;left: 20%;"><img src="../images/pic-tuli.png"/></div>
 </div>
 <script>
     var reposition = function () {
@@ -317,7 +318,7 @@
             //var imagerylayer = new Cesium.OpenStreetMapImageryProvider({
             //     url: Config.Map3D.TiledMapURl,
             //   });
-            var arcgislayer = new Cesium.ArcGisMapServerImageryProvider({ url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer", });
+            var arcgislayer = new Cesium.ArcGisMapServerImageryProvider({url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",});
 
             Cesium3DViewer = new Cesium.Viewer('map', {
                 // 关闭所有的插件
@@ -423,7 +424,9 @@
             var pointValue = geometryData.pointData.value;
             $.each(pointValue, function (infoIndex, info) {
                 var userID = info["Name"];
-                var imageurl = 'images/venueNormalIcon.png';
+                var region = info["Region"];
+                var type = info["Type"];
+                var imageurl = 'images/pic-jcz.png';
                 //  if (testIndex % 3 == 0) {
                 //     imageurl = 'images/ZYRY_OnLine.png';
                 //  } else if (testIndex % 3 == 1) {
@@ -431,27 +434,39 @@
                 //     imageurl = 'images/ZYRY_OffLine.png';
                 //     }     ;
                 //  var type=info["Type"];
+                if (type == "固定监测站") {
+                    imageurl = 'images/pic-jcz.png';
+                } else if (type == "遥感监测站") {
+                    imageurl = 'images/pic-yaogan.png';
+                } else if (type == "黑烟监测站") {
+                    imageurl = 'images/pic-heiyan.png';
+                } else if (type == "移动监测站") {
+                    imageurl = 'images/pic-yidong.png';
+                }
+
 
                 var origin = Cesium.Cartesian3.fromDegrees(info["Lon"], info["Lat"], info["Alt"]);
                 var jiancezhan = Cesium3DViewer.entities.add({
                     id: userID,
-                    name: userID,
+                    name: region,
+                    tag: type,
                     show: true,
                     position: origin,
                     billboard: {
                         image: imageurl,
-                        scale: 1,
+                        scale: 0.5,
                         show: true,
-                        material: Cesium.Color.BLUE
+                        material: Cesium.Color.BLUE,
+                        pixelOffset:new Cesium.Cartesian2(0, -35)
                     },
                     label: {
-                        text: "监测站",
+                        text: type,
                         font: '14pt monospace',
-                        scale: 2,
+                        scale: 1,
                         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                        outlineWidth: 1,
+                        outlineWidth: 0,
                         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                        pixelOffset: new Cesium.Cartesian2(0, -9)
+                        pixelOffset: new Cesium.Cartesian2(0, -5)
                     }
                 });
                 AllLayersDic['监测站图层'][userID] = jiancezhan;
@@ -594,7 +609,7 @@
                             width: 2,
                             perPositionHeight: true,
                             material: Cesium.Color.GREEN.withAlpha(0.4),
-                            extrudedHeight: 1000
+                            extrudedHeight: 10
                         }
                     });
                     var pollutionCount = Math.ceil(Math.random() * 10);
@@ -614,196 +629,31 @@
         }
 
 
-        //查询主要人员，并绘制到地图
-        var testIndex = 1;
-        var queryZhuYaoRenYuanAddToMap = function () {
-
-            for (var i = AllLayersDic['主要人员标注图层'].length - 1; i >= 0; i--) {
-                AllLayersDic['主要人员标注图层'].removeAt(i);
-            }
-            ZhuyaoRenYuanLayer.query().where(" 1=1 ")
-                .run(function (error, featureCollection) {
-                    for (var i = 0; i < featureCollection.features.length; i++) {
-                        var userID = featureCollection.features[i].properties.UserID;
-                        var imageurl = 'images/ZYRY_OnLine.png';
-                        if (testIndex % 3 == 0) {
-                            imageurl = 'images/ZYRY_OnLine.png';
-                        } else if (testIndex % 3 == 1) {
-                            imageurl = 'images/ZYRY_HuJiao.png';
-                        } else if (testIndex % 3 == 2) {
-                            imageurl = 'images/ZYRY_OffLine.png';
-                        }
-                        ;
-                        testIndex++;
-                        var origin = Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y, 20);
-                        var zhuyaorenyuan = Cesium3DViewer.entities.add({
-                            id: userID,
-                            name: userID,
-                            show: true,
-                            position: origin,
-                            billboard: {
-                                image: imageurl,
-                                scale: 0.5,
-                                show: true
-                            },
-                            label: {
-                                text: "主要人员",
-                                font: '14pt monospace',
-                                scale: 0.5,
-                                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                                outlineWidth: 2,
-                                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                                pixelOffset: new Cesium.Cartesian2(0, -9)
-                            }
-                        });
-                        AllLayersDic['非主要人员图层'][userID] = zhuyaorenyuan;
-                    }
-                });
-        };
-
-
-        //主要人员历史轨迹
-        var queryZhuYaoRenYuanLiShiGuiJiAddToMap = function () {
-            // < !--根据时间筛选 非主要人员图层-- >
-            for (var i = AllLayersDic['主要人员历史轨迹图层'].length - 1; i >= 0; i--) {
-                AllLayersDic['主要人员历史轨迹图层'].removeAt(i);
-            }
-
-            var userID = '1002';
-            LiShiGuiJiLayer.query()
-                .where("UpdateTime> CONVERT(datetime,'2015-11-01',121) and UpdateTime< CONVERT(datetime,'2015-12-18 14:15:00',121) and userid=" + userID)
-                .orderBy('UpdateTime', 'ASC')
-                .run(function (error, featureCollection) {
-
-                    var pointArr = new Array();
-                    var ss = featureCollection;
-                    for (var i = 0; i < featureCollection.features.length; i++) {
-                        /*   var point = [featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y];*/
-                        pointArr.push(featureCollection.features[i].properties.X);
-                        pointArr.push(featureCollection.features[i].properties.Y);
-                    }
-
-                    var redLine = Cesium3DViewer.entities.add({
-                        name: 'Red line on the surface',
-                        polyline: {
-                            positions: Cesium.Cartesian3.fromDegreesArray([120.486, 30.756751, 119.4868, 29.756751,
-                                118.4868, 31.756751, 117.4868, 28.756751, 116.4868, 27.756751,]),
-                            width: 1,
-                            material: Cesium.Color.RED
-                        }
-                    });
-
-                    var lishiGuiJi = Cesium3DViewer.entities.add({
-                        polyline: {
-                            positions: Cesium.Cartesian3.fromDegreesArray(pointArr),
-                            width: 2,
-                            material: Cesium.Color.RED
-                        }
-                    });
-                    AllLayersDic['非主要人员图层'][userID] = lishiGuiJi;
-
-                }
-                );
-        };
-
-        //查询非主要人员，并绘制到地图
-        var queryFeiZhuYaoRenYuanAddToMap = function () {
-            // < !--根据时间筛选 非主要人员图层-- >
-            for (var i = AllLayersDic['非主要人员图层'].length - 1; i >= 0; i--) {
-                AllLayersDic['非主要人员图层'].removeAt(i);
-            }
-            FeiZhuyaoRenYuanLayer.query().where(" 1=1 ")
-                .run(function (error, featureCollection) {
-                    for (var i = 0; i < featureCollection.features.length; i++) {
-                        var userID = featureCollection.features[i].properties.UserID;
-
-                        var feizhuyaorenyuan = Cesium3DViewer.entities.add({
-                            id: userID,
-                            position: Cesium.Cartesian3.fromDegrees(featureCollection.features[i].properties.X, featureCollection.features[i].properties.Y),
-                            point: {
-                                pixelSize: 3,
-                                color: Cesium.Color.RED,
-                                outlineColor: Cesium.Color.RED,
-                                outlineWidth: 0
-                            }
-                        });
-                        AllLayersDic['非主要人员图层'][userID] = feizhuyaorenyuan;
-                    }
-                });
-        };
-
-        //绘制主要场馆区域
-        var ZhuYaoChangGuanQuYuAddToMap = function () {
-
-            for (var i = AllLayersDic['场馆区域标注图层'].length - 1; i >= 0; i--) {
-                AllLayersDic['场馆区域标注图层'].removeAt(i);
-            }
-            for (var i = 0; i <= 10; i++) {
-                var origin = Cesium.Cartesian3.fromDegrees(Math.random() * 120.080842, Math.random() * 35.002073, 20.0);
-
-                var entity = Cesium3DViewer.entities.add({
-                    id: 'M' + i,
-                    name: "区域场馆",
-                    show: true,
-                    position: origin,
-                    model: {
-                        uri: 'data/models/Test.gltf',
-                        minimumPixelSize: 128,
-                        maximumScale: 20000,
-                        show: false,
-                        scale: 2.0,
-                        allowPicking: true,
-
-                    },
-                    billboard: {
-                        image: 'images/building-icon.png',
-                        scale: 0.5,
-                        show: true
-                    }
-                    ,
-                    label: {
-                        text: '场馆区域标注',
-                        font: '14pt monospace',
-                        scale: 0.5,
-                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                        outlineWidth: 2,
-                        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                        pixelOffset: new Cesium.Cartesian2(0, -9)
-                    }
-                });
-
-
-                AllLayersDic['场馆区域标注图层'][entity.id] = entity;
-            }
-
-
-            /*            var enty = Cesium3DViewer.entities.add({
-             id: 2,
-             name: '这是一个测试椭圆',
-             position: Cesium.Cartesian3.fromDegrees(115.47, 33.70),
-             ellipse: {
-             semiMinorAxis: 250000.0,
-             semiMajorAxis: 400000.0,
-             material: new Cesium.GridMaterialProperty({
-             color: Cesium.Color.YELLOW,
-             cellAlpha: 0.2,
-             lineCount: new Cesium.Cartesian2(8, 8),
-             lineThickness: new Cesium.Cartesian2(2.0, 2.0)
-             })
-             },
-             label: {
-             text: '这是一个测试椭圆',
-             font: '14pt monospace',
-             scale: 0.5,
-             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-             outlineWidth: 2,
-             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-             pixelOffset: new Cesium.Cartesian2(0, -9)
-             }
-             });
-             AllLayersDic['场馆区域标注图层'][enty.id] = enty;*/
-
-        };
+        /*            var enty = Cesium3DViewer.entities.add({
+         id: 2,
+         name: '这是一个测试椭圆',
+         position: Cesium.Cartesian3.fromDegrees(115.47, 33.70),
+         ellipse: {
+         semiMinorAxis: 250000.0,
+         semiMajorAxis: 400000.0,
+         material: new Cesium.GridMaterialProperty({
+         color: Cesium.Color.YELLOW,
+         cellAlpha: 0.2,
+         lineCount: new Cesium.Cartesian2(8, 8),
+         lineThickness: new Cesium.Cartesian2(2.0, 2.0)
+         })
+         },
+         label: {
+         text: '这是一个测试椭圆',
+         font: '14pt monospace',
+         scale: 0.5,
+         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+         outlineWidth: 2,
+         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+         pixelOffset: new Cesium.Cartesian2(0, -9)
+         }
+         });
+         AllLayersDic['场馆区域标注图层'][enty.id] = enty;*/
 
 
         var ClearEntity = function () {
@@ -820,15 +670,75 @@
         });
         //图层管理
         PubSub.subscribe('MapLayer3DChanged', function (checkedNodes) {
-            ClearEntity();
+            /*ClearEntity();
+for (var i = 0; i < checkedNodes.length; i++) {
+   var item = checkedNodes[i];
+   if (item == '监测站图层') {
+       queryJianCeZhanAddToMap();
+   } else if (item == '路况图层') {
+       queryRoadLineAddToMap();
+   } else if (item == '检测区域') {
+       queryPolygonAddToMap();
+   }
+}*/
+
+            for (var i  in AllLayersDic['监测站图层']) {
+                var ent = AllLayersDic['监测站图层'][i];
+                if (ent) {
+                    ent.show = false;
+                }
+            }
+            for (var i  in AllLayersDic['路况图层']) {
+                var ent = AllLayersDic['路况图层'][i];
+                if (ent) {
+                    ent.show = false;
+                }
+            }
+            for (var i  in AllLayersDic['检测区域']) {
+                var ent = AllLayersDic['检测区域'][i];
+                if (ent) {
+                    ent.show = false;
+                }
+            }
+
+
             for (var i = 0; i < checkedNodes.length; i++) {
                 var item = checkedNodes[i];
+
+                for (var j in AllLayersDic['监测站图层']) {
+                    var ent = AllLayersDic['监测站图层'][j];
+
+                    if (ent) {
+                        if (ent.id == item || ent.tag == item || ent.name == item) {
+                            ent.show = true;
+                        }
+                    }
+
+                }
+
                 if (item == '监测站图层') {
-                    queryJianCeZhanAddToMap();
+                    /* for (var j = 0; j < checkedNodes.length; j++) {
+                         var item1 = checkedNodes[i];
+                         var ent = AllLayersDic['监测站图层'][item1];
+                         if (ent) {
+                             ent.show = true;
+                         }
+                     }
+                   */
                 } else if (item == '路况图层') {
-                    queryRoadLineAddToMap();
+                    for (var line in AllLayersDic['路况图层']) {
+                        var ent = AllLayersDic['路况图层'][line];
+                        if (ent) {
+                            ent.show = true;
+                        }
+                    }
                 } else if (item == '检测区域') {
-                    queryPolygonAddToMap();
+                    for (var area in AllLayersDic['检测区域']) {
+                        var ent = AllLayersDic['检测区域'][area]
+                        if (ent) {
+                            ent.show = true;
+                        }
+                    }
                 }
             }
 

@@ -1,9 +1,7 @@
 define(['app', 'avelayout', 'layoutCache',
-    'models', 'kendo', 'jquery', 'pubsub', 'GeometryData',
-    'TabScripController', 'directives'],
+        'models', 'kendo', 'jquery', 'pubsub', 'GeometryData',
+        'TabScripController', 'directives'],
     function (appModule, avelayout, layoutCache, models, kendo, $, pubsub, geometryData) {
-
-
 
 
         var mapUrls = [
@@ -638,8 +636,7 @@ define(['app', 'avelayout', 'layoutCache',
                     if (window.CurrentMapFlag == '二维') {
 
                         screen1LayoutApp.dataContexts[1].setView(AVELayout.LayoutViewType.url, "views/mapView2D.html", $scope, $compile);
-                    }
-                    else if (window.CurrentMapFlag == '三维') {
+                    } else if (window.CurrentMapFlag == '三维') {
                         screen1LayoutApp.dataContexts[1].setView(AVELayout.LayoutViewType.url, "views/mapView3D.html", $scope, $compile);
                     }
 
@@ -686,7 +683,7 @@ define(['app', 'avelayout', 'layoutCache',
 
                     /*                    screen1LayoutApp.dataContexts[5].setView(AVELayout.LayoutViewType.url, "views/TestGrid.html", $scope, $compile);
                                         //screen1LayoutApp.dataContexts[5].setName('底部列表');
-                    
+
                                         screen1LayoutApp.dataContexts[6].setView(AVELayout.LayoutViewType.url, "views/testEchart1.html", $scope, $compile);
                                         screen1LayoutApp.dataContexts[6].setName('echartController');*/
 
@@ -2000,13 +1997,11 @@ define(['app', 'avelayout', 'layoutCache',
 
                     $scope.sum = products.length;
                     $scope.BTL = 100;
-                    $scope.groupData = new kendo.data.DataSource({ data: products });
+                    $scope.groupData = new kendo.data.DataSource({data: products});
                 }
 
                 groupDataSource();
             }]);
-
-
 
 
         //treeview 控制器
@@ -2017,11 +2012,11 @@ define(['app', 'avelayout', 'layoutCache',
                     /*{ text: "主要人员图层",expanded: true,checked:true,items: [
                         { text: "主要人员标注图层",checked:true },
                         { text: "主要人员历史轨迹图层",checked:true },
-    
+
                     ] },*/
-                    { text: "监测站图层", checked: true },
-                    { text: "路况图层", checked: true },
-                    { text: "检测区域", checked: true },
+                    {text: "监测站图层", checked: true},
+                    {text: "路况图层", checked: true},
+                    {text: "检测区域", checked: true},
 
                 ]
             });
@@ -2036,6 +2031,7 @@ define(['app', 'avelayout', 'layoutCache',
                     }
                 }
             }
+
             //checkbox 有一个bug，第一次选中父节点，选中结果只有父节点一个，没有连着子节点一起选中
             $scope.onChecked = function (kendothis) {
                 var checkedNodes = [],
@@ -2046,45 +2042,87 @@ define(['app', 'avelayout', 'layoutCache',
             };
         });
 
+
+
+
         //treeview 控制器
         appModule.controller("MapManager3DControl", function ($scope) {
 
             //通过监测站数据生成 treedata
 
-            var data = geometryData.pointData;
-            $scope.treeData = new kendo.data.HierarchicalDataSource({
+            var data = geometryData.pointData.value;
+            var AreaArray = [];
+
+            $.each(data, function (i, point) {
+                var isHave = false;
+                $.each(AreaArray, function (j, area) {
+                    if (area["text"] == point["Region"]) {
+                        isHave = true;
+                    }
+                });
+                if (!isHave) {
+                    var tmp = {text: point["Region"], dataContext: "region", checked: true, items: []};
+                    tmp.items.push({text: point.Type, checked: true, items: []})
+                    AreaArray.push(tmp);
+                }
+
+            });
+            $.each(data, function (h, pointR) {
+
+                $.each(AreaArray, function (l, areaR) {
+                    if (areaR["text"] == pointR["Region"]) {
+                        var isHave = false;
+                        $.each(areaR.items, function (k, type) {
+
+                            if (type["text"] == pointR.Type) {
+                                type.items.push({text: pointR["Name"], dataContext: "point", checked: true});
+                                isHave = true;
+                            }
+                            if (!isHave) {
+                                var tmp = {text: pointR.Type, dataContext: "type", checked: true, items: []};
+                                tmp.items.push({text: pointR["Name"], dataContext: "point", checked: true});
+                                areaR.items.push(tmp);
+                            }
+                        })
+                    }
+                });
+            });
+
+           var dataTree = new kendo.data.HierarchicalDataSource({
                 data: [
-                    { text: "监测站图层", dataContext: '监测站', checked: true },
-                    { text: "路况图层", checked: true },
-                    { text: "检测区域", checked: true }
-
-
-
-
+                    {text: "监测站图层", dataContext: '监测站', checked: true, items: AreaArray},
+                    {text: "路况图层", checked: true},
+                    {text: "检测区域", checked: true}
                 ]
             });
+            $scope.treeData = dataTree;
+            kendo.bind($("treeData"), dataTree);
+
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
-                    if (nodes[i].checked) {
+                    if (nodes[i].checked ) {
                         checkedNodes.push(nodes[i].text);//todo:这里build树的时候push dataContext，context尽量用object不要用文字，不要push标题文字
                     }
                     if (nodes[i].hasChildren) {
-                        checkedNodeIds(nodes[i].children.view(), checkedNodes);
+                        checkedNodeIds(nodes[i].children.data(), checkedNodes);
                     }
+
                 }
             }
+
             //checkbox 有一个bug，第一次选中父节点，选中结果只有父节点一个，没有连着子节点一起选中
             $scope.onChecked = function (kendothis) {
+                dataTree;
                 var checkedNodes = [],
                     treeView = kendothis.tree,
                     message;
-                checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+                checkedNodeIds(treeView.dataSource.data(), checkedNodes);
                 pubsub.publish('MapLayer3DChanged', checkedNodes);
             };
         });
 
 
-        appModule.controller("MenuManagerControl", function ($scope,$rootScope) {
+        appModule.controller("MenuManagerControl", function ($scope, $rootScope) {
             $scope.MenuUserName = '未知';
             $scope.MenuUserId = '未知';
             $scope.MenuUserAge = '未知';
@@ -2107,6 +2145,7 @@ define(['app', 'avelayout', 'layoutCache',
                 $scope.MenuUserPhone = '13852176395';
             });
 
+
             require(['kendo', 'jquery'], function (k, $) {
                 var onClose = function () {
                     player.pause();
@@ -2116,20 +2155,20 @@ define(['app', 'avelayout', 'layoutCache',
                 };
                 if ($rootScope.player == null) {
                     var player = new Aliplayer({
-                        "id": "player-con",
-                        "source": "//player.alicdn.com/video/aliyunmedia.mp4",
-                        "width": "640px",
-                        "height": "480px",
-                        "autoplay": false,
-                        "isLive": true,
-                        "rePlay": false,
-                        "playsinline": true,
-                        "preload": true,
-                        "controlBarVisibility": "hover",
-                        "useH5Prism": true
-                    }, function (player) {
-                        console.log("The player is created");
-                    }
+                            "id": "player-con",
+                            "source": "//player.alicdn.com/video/aliyunmedia.mp4",
+                            "width": "640px",
+                            "height": "480px",
+                            "autoplay": false,
+                            "isLive": true,
+                            "rePlay": false,
+                            "playsinline": true,
+                            "preload": true,
+                            "controlBarVisibility": "hover",
+                            "useH5Prism": true
+                        }, function (player) {
+                            console.log("The player is created");
+                        }
                     );
                     $rootScope.player = player;
                 }
@@ -2152,9 +2191,9 @@ define(['app', 'avelayout', 'layoutCache',
                 $('#undo').click(function () {
                     $('#window').data("kendoWindow").center().open();
                 });
-
             });
         });
+
 
         appModule.controller('mapBaseLayerListView2DController', ['$scope', function ($scope) {
 
@@ -2165,7 +2204,6 @@ define(['app', 'avelayout', 'layoutCache',
                 pubsub.publish('MapLayer2DChanged', dataItem);
             }
         }]);
-
 
 
         appModule.controller('mapBaseLayer3DListViewController', ['$scope', function ($scope) {
