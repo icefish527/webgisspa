@@ -1,12 +1,15 @@
 ﻿/* 字体样式表 */
+
 @import url(fonts/stylesheet.css);
 /* AVE布局控件样式表 */
+
 @import url(aveLayout.css);
 /* Grid样式表 */
+
 @import url(Grid.css);
 /* scrollbar 样式表 */
-@import url(scrollbar.css);
 
+@import url(scrollbar.css);
 body {
     margin: 0px;
     background-color: #222222;
@@ -41,7 +44,7 @@ footer {
     background-image: linear-gradient(#222222, #171717);
 }
 
-button{
+button {
     outline: none;
 }
 
@@ -66,8 +69,7 @@ div.themeContainerContent {
     _top: -50%;
 }
 
-#themeHeaderCenter {
-}
+#themeHeaderCenter {}
 
 #themeFooterLeft {
     padding-left: 20px;
@@ -83,7 +85,7 @@ div.themeContainerContent {
 
 /* 重载Kendo样式 */
 
-.k-tabstrip > .k-content, .k-panelbar .k-tabstrip > .k-content {
+.k-tabstrip>.k-content, .k-panelbar .k-tabstrip>.k-content {
     padding: 0em 0em;
     border-width: 0;
 }
@@ -164,13 +166,16 @@ div.themeContainerContent {
 .k-window .k-window-titlebar .k-window-action .k-icon {
     width: 15px;
     height: 12px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url('../images/max-icon.png');
-    background-repeat: no-repeat;
+    margin-left: 8px;
+    margin-top: 5px;
+    /* background-image: url('../images/max-icon.png'); */
+    /* background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    opacity: 1;
+    opacity: 1; */
+}
+.k-icon k-i-close{
+    background-position:-32px -16px;
 }
 
 .k-window .k-window-content {
@@ -189,14 +194,15 @@ div.themeContainerContent {
 
 .leaflet-popup-content {
     margin: 7px;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#358eba), to(#14648c)); /*谷歌*/
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#358eba), to(#14648c));
+    /*谷歌*/
 }
-.mousemenu{
-    background: -moz-linear-gradient(top, #358eba, #14648c); /*火狐*/
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#358eba), to(#14648c)); /*谷歌*/
+
+.mousemenu {
+    background: -moz-linear-gradient(top, #358eba, #14648c);
+    /*火狐*/
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#358eba), to(#14648c));
+    /*谷歌*/
     border-radius: 10%;
     height: 230px;
 }
-
-
-
