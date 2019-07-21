@@ -1,6 +1,6 @@
 define(['app', 'avelayout', 'layoutCache',
-        'models', 'kendo', 'jquery', 'pubsub', 'GeometryData',
-        'TabScripController', 'directives'],
+    'models', 'kendo', 'jquery', 'pubsub', 'GeometryData',
+    'TabScripController', 'directives'],
     function (appModule, avelayout, layoutCache, models, kendo, $, pubsub, geometryData) {
 
 
@@ -733,9 +733,9 @@ define(['app', 'avelayout', 'layoutCache',
                     initSingleScreen();
                 }
 
-                $(window).resize(function () {
-                    layoutByScreenMode();
-                });
+                // $(window).resize(function () {
+                //     layoutByScreenMode();
+                // });
 
                 layoutByScreenMode();
 
@@ -1997,7 +1997,7 @@ define(['app', 'avelayout', 'layoutCache',
 
                     $scope.sum = products.length;
                     $scope.BTL = 100;
-                    $scope.groupData = new kendo.data.DataSource({data: products});
+                    $scope.groupData = new kendo.data.DataSource({ data: products });
                 }
 
                 groupDataSource();
@@ -2014,9 +2014,9 @@ define(['app', 'avelayout', 'layoutCache',
                         { text: "主要人员历史轨迹图层",checked:true },
 
                     ] },*/
-                    {text: "监测站图层", checked: true},
-                    {text: "路况图层", checked: true},
-                    {text: "检测区域", checked: true},
+                    { text: "监测站图层", checked: true },
+                    { text: "路况图层", checked: true },
+                    { text: "检测区域", checked: true },
 
                 ]
             });
@@ -2061,8 +2061,8 @@ define(['app', 'avelayout', 'layoutCache',
                     }
                 });
                 if (!isHave) {
-                    var tmp = {text: point["Region"], dataContext: "region", checked: true, items: []};
-                    tmp.items.push({text: point.Type, checked: true, items: []})
+                    var tmp = { text: point["Region"], dataContext: "region", checked: true, items: [] };
+                    tmp.items.push({ text: point.Type, checked: true, items: [] })
                     AreaArray.push(tmp);
                 }
 
@@ -2075,12 +2075,12 @@ define(['app', 'avelayout', 'layoutCache',
                         $.each(areaR.items, function (k, type) {
 
                             if (type["text"] == pointR.Type) {
-                                type.items.push({text: pointR["Name"], dataContext: "point", checked: true});
+                                type.items.push({ text: pointR["Name"], dataContext: "point", checked: true });
                                 isHave = true;
                             }
                             if (!isHave) {
-                                var tmp = {text: pointR.Type, dataContext: "type", checked: true, items: []};
-                                tmp.items.push({text: pointR["Name"], dataContext: "point", checked: true});
+                                var tmp = { text: pointR.Type, dataContext: "type", checked: true, items: [] };
+                                tmp.items.push({ text: pointR["Name"], dataContext: "point", checked: true });
                                 areaR.items.push(tmp);
                             }
                         })
@@ -2088,11 +2088,11 @@ define(['app', 'avelayout', 'layoutCache',
                 });
             });
 
-           var dataTree = new kendo.data.HierarchicalDataSource({
+            var dataTree = new kendo.data.HierarchicalDataSource({
                 data: [
-                    {text: "监测站图层", dataContext: '监测站', checked: true, items: AreaArray},
-                    {text: "路况图层", checked: true},
-                    {text: "检测区域", checked: true}
+                    { text: "监测站图层", dataContext: '监测站', checked: true, items: AreaArray },
+                    { text: "路况图层", checked: true },
+                    { text: "检测区域", checked: true }
                 ]
             });
             $scope.treeData = dataTree;
@@ -2100,7 +2100,7 @@ define(['app', 'avelayout', 'layoutCache',
 
             function checkedNodeIds(nodes, checkedNodes) {
                 for (var i = 0; i < nodes.length; i++) {
-                    if (nodes[i].checked ) {
+                    if (nodes[i].checked) {
                         checkedNodes.push(nodes[i].text);//todo:这里build树的时候push dataContext，context尽量用object不要用文字，不要push标题文字
                     }
                     if (nodes[i].hasChildren) {
@@ -2155,21 +2155,29 @@ define(['app', 'avelayout', 'layoutCache',
                 };
                 if ($rootScope.player == null) {
                     var player = new Aliplayer({
-                            "id": "player-con",
-                            "source": "//player.alicdn.com/video/aliyunmedia.mp4",
-                            "width": "640px",
-                            "height": "480px",
-                            "autoplay": false,
-                            "isLive": true,
-                            "rePlay": false,
-                            "playsinline": true,
-                            "preload": false,
-                            "controlBarVisibility": "hover",
-                            "useH5Prism": true
-                        }, function (player) {
-                            console.log("The player is created");
-                        }
+                        "id": "player-con",
+                        "source": "//player.alicdn.com/video/aliyunmedia.mp4",
+                        "width": "640px",
+                        "height": "480px",
+                        "autoplay": false,
+                        "isLive": true,
+                        "rePlay": false,
+                        "playsinline": true,
+                        "preload": false,
+                        "controlBarVisibility": "hover",
+                        "useH5Prism": true
+                    }, function (player) {
+                        console.log("The player is created");
+                    }
                     );
+                    // var handleRequestOrCancelFullScreen = function (e) {
+                    //     window.DotRefresh = true;
+                    // }
+                    // var handleCancelFullScreen = function (e) {
+                    //     window.DotRefresh = true;
+                    // }
+                    // player.on('requestFullScreen', handleRequestOrCancelFullScreen);
+                    // player.on('cancelFullScreen', handleCancelFullScreen);
                     $rootScope.player = player;
                 }
                 var $window = null;
