@@ -36,14 +36,53 @@ define(function () {
          "name": ["石家庄", "张家口", "邯郸", "霸州", "沧州"]
       },
       baojing:
-      {
-         "cheliangjianceBaojing": ["2019年7月21日14时17分，牌照号为冀C55551尿素不合格","2019年7月21日14时17分，牌照号为冀C55552尿素不合格","2019年7月21日14时17分，牌照号为冀C55553尿素不合格"],
-         "yaoganzhuapaiBaojing": ["2019年7月21日14时17分，牌照号为冀C22221尾气超标","2019年7月21日14时17分，牌照号为冀C22222尾气超标","2019年7月21日14时17分，牌照号为冀C22223尾气超标"],
-         "otherAlertData": {
-            "HC": 100,
-            "CO": 60,
-            "NO": 140
-         }
-      }
+         [
+            {
+               datetime: "2019-07-21 09:01:22",
+               type: "车辆检测",
+               carNumber: "冀A52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 09:01:23",
+               type: "遥感抓拍",
+               carNumber: "冀AB2403",
+               description: "车辆氮氧化合物排放严重超标"
+            }, {
+               datetime: "2019-07-21 09:02:22",
+               type: "其他告警",
+               carNumber: "冀A52403",
+               description: "碳氢HC超标"
+            }, {
+               datetime: "2019-07-21 09:05:22",
+               type: "车辆检测",
+               carNumber: "冀A52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 10:01:22",
+               type: "车辆检测",
+               carNumber: "冀A52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 12:01:22",
+               type: "遥感抓拍",
+               carNumber: "冀F52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 09:05:22",
+               type: "车辆检测",
+               carNumber: "冀A52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 10:01:22",
+               type: "车辆检测",
+               carNumber: "冀A52403",
+               description: "车辆尾气超标"
+            }, {
+               datetime: "2019-07-21 12:01:22",
+               type: "遥感抓拍",
+               carNumber: "冀F52403",
+               description: "车辆尾气超标"
+            }
+         ]
    }
 });

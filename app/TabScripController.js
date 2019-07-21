@@ -988,100 +988,43 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
     //报警数据控制器
     appModule.controller("BaoJingShujuController", ['$scope', function ($scope) {
         //todo:这里调接口
-        var cheliangjianceBaojing;
-        var yaoganzhuapaiBaojing;
-        var COValue;
-        var NOValue;
-        var HCValue;
-        var yaogan = testchartdata.yaogan;
-        valuesbd = yaogan.valuebd;
-        valuesyd = yaogan.valueyd;
-        names = yaogan.name;
-        var servicedatabd = [];
-        var servicedatayd = [];
-        for (var i = 0; i < names.length; i++) {
-            var obj = new Object();
-            obj.name = names[i];
-            obj.value = valuesbd[i];
-            servicedatabd[i] = obj;
-
-        }
-        for (var i = 0; i < names.length; i++) {
-            var obj = new Object();
-            obj.name = names[i];
-            obj.value = valuesyd[i];
-            servicedatayd[i] = obj;
-
+        var baojing=testchartdata.baojing;
+        function onChange(selectItem) {
+            var selected = $.map(selectItem.sender.select(), function (item) {
+                return $(item).text();
+            });
+            alert("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
         }
 
-        // require(['echarts', 'echarts/theme/macarons', 'echarts/chart/bar'], function (ec, theme) {
-        //     var myChart = ec.init(document.getElementById('yaoganChart'));
-
-        //     var option = {
-        //         tooltip: {
-        //             trigger: 'axis'
-        //         },
-        //         grid: {
-        //             borderWidth: 0
-        //         },
-        //         legend: {
-        //             orient: 'vertical',
-        //             x: 'left',
-        //             data: ['本地车', '异地车'],
-        //             textStyle: {//图例文字的样式
-        //                 color: '#fff',
-        //                 fontSize: 12
-        //             }
-        //         },
-        //         xAxis: [
-        //             {
-        //                 type: 'category',
-        //                 data: names,
-        //                 axisLabel: {
-        //                     textStyle: {
-        //                         color: "white"
-        //                     }
-        //                 },
-        //                 splitLine: {
-        //                     show: false
-        //                 },
-        //                 splitArea: {
-        //                     show: false
-        //                 }
-        //             }
-        //         ],
-        //         yAxis: [
-        //             {
-        //                 type: 'value',
-        //                 axisLabel: {
-        //                     textStyle: {
-        //                         color: "white"
-        //                     }
-        //                 }
-        //             }
-        //         ],
-        //         color: ['#4ad2ff', 'orange'],
-        //         series: [
-        //             {
-        //                 name: '本地车',
-        //                 type: 'bar',
-        //                 data: servicedatabd
-        //             },
-        //             {
-        //                 name: '异地车',
-        //                 type: 'bar',
-        //                 data: servicedatayd
-        //             }
-        //         ]
-
-        //     };
-        //     // 为echarts对象加载数据
-        //     myChart.setOption(option);
-        //     myChart.setTheme(theme);
-
-        //     timeTicket = setInterval(function () {
-        //         myChart.resize();
-        //     }, 1000);
-        // });
+        $scope.Options = ({
+            dataSource: {
+                data: baojing,
+                schema: {
+                    model: {
+                        fields: {
+                            datetime: { type: "string" },
+                            type: { type: "string" },
+                            carNumber: { type: "string" },
+                            description: { type: "string" },
+                        }
+                    }
+                }
+            },
+            scrollable: true,
+            sortable: true,
+            filterable: false,
+            pageable: false,
+            selectable: "simple row", // "multiple cell"
+            change: onChange,
+            columns: [
+                { field: "datetime", title: "报警时间", width: 25 },
+                { field: "type", title: "报警类型", width: 25 },
+                { field: "carNumber", title: "车辆牌照", width: 35 },
+                { field: "description", title: "描述", width: 100 },
+            ]
+        });
+        $scope.Click = function (event) {
+            alert(event);
+        }
     }]);
 });
