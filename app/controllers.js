@@ -2163,7 +2163,7 @@ define(['app', 'avelayout', 'layoutCache',
                             "isLive": true,
                             "rePlay": false,
                             "playsinline": true,
-                            "preload": true,
+                            "preload": false,
                             "controlBarVisibility": "hover",
                             "useH5Prism": true
                         }, function (player) {

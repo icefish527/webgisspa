@@ -993,7 +993,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
             var selected = $.map(selectItem.sender.select(), function (item) {
                 return $(item).text();
             });
-            alert("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+            //alert("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
         }
 
         $scope.Options = ({
@@ -1014,17 +1014,31 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
             sortable: true,
             filterable: false,
             pageable: false,
+            resizable: true,
             selectable: "simple row", // "multiple cell"
             change: onChange,
             columns: [
-                { field: "datetime", title: "报警时间", width: 25 },
-                { field: "type", title: "报警类型", width: 25 },
-                { field: "carNumber", title: "车辆牌照", width: 35 },
-                { field: "description", title: "描述", width: 100 },
+                { field: "datetime", title: "报警时间", width: 80 },
+                { field: "type", title: "报警类型", width: 80 },
+                { field: "carNumber", title: "车辆牌照", width: 80 },
+                { field: "description", title: "描述", width: 80 },
             ]
         });
         $scope.Click = function (event) {
             alert(event);
         }
+
+        // $("#gridGJ").kendoTooltip({
+        //     autoHide: true,
+        //     showOn: "mouseenter",
+        //     filter: ".k-grid-content",
+        //     position: "center",
+        //     content: function(e){
+        //         var dataItem = $("#gridGJ").data("kendoGrid").dataItem(e.target.closest("tr"));
+        //         var content = dataItem.description;
+        //         return content;
+        //     }
+        // }).data("kendoTooltip");
+    
     }]);
 });

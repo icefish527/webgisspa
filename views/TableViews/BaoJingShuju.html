@@ -13,7 +13,21 @@
 
 </style>
 <script>
-    require(['jquery'], function ($) {
+    require(['jquery', 'kendo'], function ($) {
         $(".k-grid-content").attr("style", "height:210px;");
+        $("#gridGJ").kendoTooltip({
+            autoHide: true,
+            width: 120,
+            showOn: "mouseenter",
+            filter: "span",
+            position: "top",
+            content: function (e) {
+                var target = e.target; // the element for which the tooltip is shown
+                return target.text(); // set the element text as content of the tooltip
+                // var dataItem = $("#gridGJ").data("kendoGrid").dataItem(e.target.closest("tr"));                
+                // var content = dataItem.datetime;
+                // return content;
+            }
+        }).data("kendoTooltip");
     });
 </script>
