@@ -1,7 +1,7 @@
 /**
  * Created by SYS on 2016/4/26.
  */
-define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jquery'], function (appModule, pubsub, testchartdata,pictureSlider,kendo,$) {
+define(['app', 'pubsub', '../data/testchartdata', 'pictureSlider', 'kendo', 'jquery'], function (appModule, pubsub, testchartdata, pictureSlider, kendo, $) {
 
 
     //区域统计控制器
@@ -26,6 +26,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
                 tooltip: {
                     trigger: 'item',
                     formatter: "{b}:<br/> {c} ({d}%)",
+                    enterable: true,
                     textStyle: {
                         'fontsize': 12,
                     }
@@ -50,7 +51,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
                                 color: function (params) {
                                     //自定义颜色
                                     var colorList = [
-                                        'green', 'red'
+                                        '#00b483', '#ea214c'
                                     ];
                                     return colorList[params.dataIndex]
                                 }
@@ -84,6 +85,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
                 tooltip: {
                     trigger: 'item',
                     formatter: "{b}:<br/> {c} ({d}%)",
+                    enterable: true,
                     textStyle: {
                         'fontsize': 12,
                     }
@@ -108,7 +110,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
                                 color: function (params) {
                                     //自定义颜色
                                     var colorList = [
-                                        'green', 'red'
+                                        '#00b483', '#ea214c'
                                     ];
                                     return colorList[params.dataIndex]
                                 }
@@ -535,7 +537,7 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
     //报警数据控制器
     appModule.controller("BaoJingShujuController", ['$scope', function ($scope) {
         //todo:这里调接口
-        var baojing=testchartdata.baojing;
+        var baojing = testchartdata.baojing;
         function onChange(selectItem) {
             var selected = $.map(selectItem.sender.select(), function (item) {
                 return $(item).text();
@@ -586,6 +588,6 @@ define(['app', 'pubsub', '../data/testchartdata','pictureSlider', 'kendo', 'jque
         //         return content;
         //     }
         // }).data("kendoTooltip");
-    
+
     }]);
 });
