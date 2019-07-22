@@ -93,9 +93,7 @@ tr {
     text-decoration: none
 }
 
-.k-grid-header th.k-header .k-icon {
-    visibility: hidden;
-}
+
 
 .k-header .k-grid-filter, .k-header .k-header-column-menu {
     float: right;
