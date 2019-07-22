@@ -2156,7 +2156,7 @@ define(['app', 'avelayout', 'layoutCache',
                 if ($rootScope.player == null) {
                     var player = new Aliplayer({
                         "id": "player-con",
-                        "source": "//player.alicdn.com/video/aliyunmedia.mp4",
+                        "source": "../images/1.mp4",
                         "width": "640px",
                         "height": "480px",
                         "autoplay": false,
