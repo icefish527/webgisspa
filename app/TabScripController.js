@@ -7,6 +7,9 @@ define(['app', 'pubsub', '../data/testchartdata', 'pictureSlider', 'kendo', 'jqu
     //区域统计控制器
     appModule.controller("QuYuTongJiController", ['$scope', function ($scope) {
         //todo:这里调接口
+        // $.get("data.json", function (response) {
+        //     console.log("2");
+        // });
         var bendizongliang = testchartdata.quyutongji.bendizongliang;
         var bendizhengchang = testchartdata.quyutongji.bendizhengchang;
         var bendiyichang = testchartdata.quyutongji.bendiyichang;
