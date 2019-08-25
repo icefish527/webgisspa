@@ -512,7 +512,6 @@ define(['app', 'pubsub', '../data/testchartdata', 'pictureSlider', 'kendo', 'jqu
                         }
                     }
                 ],
-                color: ['#4ad2ff', 'orange'],
                 series: [
                     {
                         name: '本地车',
@@ -547,39 +546,37 @@ define(['app', 'pubsub', '../data/testchartdata', 'pictureSlider', 'kendo', 'jqu
             });
             //alert("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
         }
-
-        $scope.Options = ({
-            dataSource: {
-                data: baojing,
-                schema: {
-                    model: {
-                        fields: {
-                            datetime: { type: "string" },
-                            type: { type: "string" },
-                            carNumber: { type: "string" },
-                            description: { type: "string" },
+            $scope.Options = ({
+                dataSource: {
+                    data: baojing,
+                    schema: {
+                        model: {
+                            fields: {
+                                datetime: { type: "string" },
+                                type: { type: "string" },
+                                carNumber: { type: "string" },
+                                description: { type: "string" },
+                            }
                         }
                     }
-                }
-            },
-            scrollable: true,
-            sortable: true,
-            filterable: false,
-            pageable: false,
-            resizable: true,
-            selectable: "simple row", // "multiple cell"
-            change: onChange,
-            columns: [
-                { field: "datetime", title: "报警时间", width: 80 },
-                { field: "type", title: "报警类型", width: 80 },
-                { field: "carNumber", title: "车辆牌照", width: 80 },
-                { field: "description", title: "描述", width: 80 },
-            ]
-        });
-        $scope.Click = function (event) {
-            alert(event);
-        }
-
+                },
+                scrollable: true,
+                sortable: true,
+                filterable: false,
+                pageable: false,
+                resizable: true,
+                selectable: "simple row", // "multiple cell"
+                change: onChange,
+                columns: [
+                    { field: "datetime", title: "报警时间", width: 80 },
+                    { field: "type", title: "报警类型", width: 80 },
+                    { field: "carNumber", title: "车辆牌照", width: 80 },
+                    { field: "description", title: "描述", width: 80 },
+                ]
+            });
+            $scope.Click = function (event) {
+                alert(event);
+            }
         // $("#gridGJ").kendoTooltip({
         //     autoHide: true,
         //     showOn: "mouseenter",
