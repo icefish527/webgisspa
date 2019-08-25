@@ -733,9 +733,9 @@ define(['app', 'avelayout', 'layoutCache',
                     initSingleScreen();
                 }
 
-                // $(window).resize(function () {
-                //     layoutByScreenMode();
-                // });
+                $(window).resize(function () {
+                     layoutByScreenMode();
+                 });
 
                 layoutByScreenMode();
 
@@ -2050,7 +2050,7 @@ define(['app', 'avelayout', 'layoutCache',
 
             //通过监测站数据生成 treedata
 
-            var data = geometryData.pointData.value;
+            var data = geometryData.JCZData.value;
             var AreaArray = [];
 
             $.each(data, function (i, point) {
@@ -2088,11 +2088,13 @@ define(['app', 'avelayout', 'layoutCache',
                 });
             });
 
+            var pointArray=[ { text: "定期检验", checked: true }, { text: "固定遥感", checked: true }, { text: "移动遥感", checked: true }, { text: "黑烟车", checked: true }];
+            var polygonArray=[{ text: "CO", checked: true },{ text: "NOx", checked: false },{ text: "HC", checked: false },{ text: "PM", checked: false }];
             var dataTree = new kendo.data.HierarchicalDataSource({
                 data: [
-                    { text: "监测站图层", dataContext: '监测站', checked: true, items: AreaArray },
+                    { text: "监测站图层", dataContext: '监测站', checked: true, items: pointArray },
                     { text: "路况图层", checked: true },
-                    { text: "检测区域", checked: true }
+                    { text: "污染物图层", checked: true,items:polygonArray }
                 ]
             });
             $scope.treeData = dataTree;
@@ -2156,7 +2158,7 @@ define(['app', 'avelayout', 'layoutCache',
                 if ($rootScope.player == null) {
                     var player = new Aliplayer({
                         "id": "player-con",
-                        "source": "../images/1.mp4",
+                        "source": "images/1.mp4",
                         "width": "640px",
                         "height": "480px",
                         "autoplay": false,
